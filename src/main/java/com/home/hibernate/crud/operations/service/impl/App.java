@@ -1,27 +1,28 @@
-package com.home.hibernate.crud.operations;
-
-import java.util.List;
+package com.home.hibernate.crud.operations.service.impl;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
-public class AppMain {
+@Component
+public class App {
 
-    public final static Logger logger = Logger.getLogger(AppMain.class);
+    public final static Logger logger = Logger.getLogger(App.class);
 
-    public static void main(String[] args) {
-        logger.info(".......Hibernate Crud Operations Example.......\n");
-        logger.info("\n=======CREATE RECORDS=======\n");
-        DbOperations.createRecord();
-
-        logger.info("\n=======READ RECORDS=======\n");
-        List<Student> students = DbOperations.displayRecords();
-        for (Student studentObj : students) {
-            System.out.println("student is: " + studentObj);
-            logger.info(studentObj.toString());
-        }
-
+    public void doAction() {
+        System.out.println("application executed doAction method");
+//        logger.info(".......Hibernate Crud Operations Example.......\n");
+//        logger.info("\n=======CREATE RECORDS=======\n");
+//        DbOperations.createRecord();
+//
+//        logger.info("\n=======READ RECORDS=======\n");
+//        List<Student> students = DbOperations.displayRecords();
+//        for (Student studentObj : students) {
+//            System.out.println("student is: " + studentObj);
+//            logger.info(studentObj.toString());
+//        }
+//
 //        logger.info("\n=======UPDATE RECORDS=======\n");
-//        int updateId = 1;
+//        int updateId = 2;
 //        DbOperations.updateRecord(updateId);
 //        logger.info("\n=======READ RECORDS AFTER UPDATION=======\n");
 //        List<Student> updateStudent = DbOperations.displayRecords();

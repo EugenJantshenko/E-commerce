@@ -1,21 +1,24 @@
-package com.home.hibernate.crud.operations;
+package com.home.hibernate.crud.operations.service.impl;
 
-import java.sql.Struct;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.home.hibernate.crud.operations.entity.Student;
 import org.apache.log4j.Logger;
-import org.hibernate.*;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class DbOperations {
 
     static Session sessionObj;
     static SessionFactory sessionFactoryObj;
 
-    public final static Logger logger = Logger.getLogger(DbOperations.class);
+    public static final Logger logger = Logger.getLogger(DbOperations.class);
 
         // This Method Is Used To Create The Hibernate's SessionFactory Object
     private static SessionFactory buildSessionFactory() {
@@ -75,7 +78,7 @@ public class DbOperations {
             // Getting Session Object From SessionFactory
             sessionObj = buildSessionFactory().openSession();
 
-            students = sessionObj.createQuery("FROM student").list();
+            students = sessionObj.createQuery("FROM Student").list();
         } catch(Exception sqlException) {
             sqlException.printStackTrace();
         } finally {
