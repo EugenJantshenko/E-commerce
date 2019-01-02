@@ -67,6 +67,7 @@ public class WareHouseServiceImpl implements WarehouseService {
         Ware currentWare=wareRepository.findByWareName(name);
         wareRepository.delete(currentWare);
         return true;
+
     }
 
     @Transactional
