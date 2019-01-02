@@ -17,18 +17,20 @@ public class Ware implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @Column(name="ware_name")
+    @Column(name="ware_name" /*,unique = true*/)
     private String wareName;
 
     @Column(name = "price")
     private double price;
 
     @Column(name = "count")
-    private int count;
+    private Integer count;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private WareCategory wareCategory;
+
+
 }

@@ -3,10 +3,19 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5Dialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/tutorialdb?useJDBCCompliantTimezoneShift=true&serverTimezone=UTC
     username: root
     password: 05941987Jeka
+
+logging:
+  level:
+    org.springframework.web: ERROR
+    com.mkyong: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file: D:\\SLF4J_logging.log

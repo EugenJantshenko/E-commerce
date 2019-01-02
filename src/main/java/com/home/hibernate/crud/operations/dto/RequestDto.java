@@ -10,6 +10,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class RequestDto {
     private String product;
     private Double price;
