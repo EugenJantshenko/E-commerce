@@ -10,9 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 
 @Slf4j
 @Service
@@ -24,7 +31,7 @@ public class WareHouseServiceImpl implements WarehouseService {
     private Map<String, Integer> cart;
 
     @Autowired
-    public WareHouseServiceImpl(WareRepository repository,WareCategoryRepository wareCategoryRepository) {
+    public WareHouseServiceImpl(WareRepository repository, WareCategoryRepository wareCategoryRepository) {
         this.wareCategoryRepository = wareCategoryRepository;
         this.wareRepository = repository;
         cart = new HashMap<>();
@@ -78,7 +85,7 @@ public class WareHouseServiceImpl implements WarehouseService {
         if (!wareRepository.existsByWareName(name)) {
             return false;
         }
-        Ware currentWare=wareRepository.findByWareName(name);
+        Ware currentWare = wareRepository.findByWareName(name);
         wareRepository.delete(currentWare);
         return true;
 
@@ -108,14 +115,14 @@ public class WareHouseServiceImpl implements WarehouseService {
         Ware currentWare = wareRepository.findByWareName(name);
         cart.put(currentWare.getWareName(), count);
         log.info("Ware added to cart {} {}", name, count);
-        System.out.println("Ware added to cart {} {}"+ name + count);
+        System.out.println("Ware added to cart {} {}" + name + count);
         System.out.println(cart.size());
         return true;
     }
 
     @Override
     public boolean removeWareFromCart(String name) {
-        if(!cart.containsKey(name)){
+        if (!cart.containsKey(name)) {
             log.info("Cart dosent contain chosen ware");
             return false;
         }
@@ -132,8 +139,8 @@ public class WareHouseServiceImpl implements WarehouseService {
         }
         for (Map.Entry<String, Integer> entry : cart.entrySet()) {
             if (checkWareOnWarehouse(entry.getKey(), entry.getValue())) {
-                Ware ware=wareRepository.findByWareName(entry.getKey());
-                ware.setCount(ware.getCount()-entry.getValue());
+                Ware ware = wareRepository.findByWareName(entry.getKey());
+                ware.setCount(ware.getCount() - entry.getValue());
                 wareRepository.save(ware);
                 System.out.println("Ware was buy in shop");
                 continue;
@@ -147,16 +154,39 @@ public class WareHouseServiceImpl implements WarehouseService {
     }
 
     @Transactional
-    public boolean changeAccess(String name){
+    public boolean changeAccess(String name) {
         if (!wareRepository.existsByWareName(name)) {
             return false;
         }
-        Ware currentWare=wareRepository.findByWareName(name);
-        if(currentWare.isBlocked()){
+        Ware currentWare = wareRepository.findByWareName(name);
+        if (currentWare.isBlocked()) {
             currentWare.setBlocked(false);
-        }
-        else currentWare.setBlocked(false);
+        } else currentWare.setBlocked(false);
         wareRepository.save(currentWare);
         return true;
+    }
+
+
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
+    @Scheduled(fixedRate = 15000)
+    public void checkWareLeft() {
+        Iterable<Ware> all = wareRepository.findAll();
+//        List<Ware> less10 = new ArrayList<>();
+//        all.forEach(item -> {
+//            if (item.getCount() <=10) {
+//                less10.add(item);
+//            }
+//        });
+        List<Ware> wares = StreamSupport.stream(all.spliterator(), false)
+                .filter(item -> item.getCount() <= 10)
+                .collect(Collectors.toList());
+
+        for (Ware item:wares) {
+            log.info(item.getWareName()+" is less"+" "+item.getCount());
+        }
+
+        //System.out.println(wareRepository.count());
+        log.info("The time is now {}", dateFormat.format(new Date()));
     }
 }
