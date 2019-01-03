@@ -2,14 +2,15 @@ package com.home.hibernate.crud.operations.service.impl;
 
 import com.home.hibernate.crud.operations.entity.Ware;
 import com.home.hibernate.crud.operations.entity.WareCategory;
+import com.home.hibernate.crud.operations.repository.WareCategoryRepository;
 import com.home.hibernate.crud.operations.repository.WareRepository;
 import com.home.hibernate.crud.operations.service.WarehouseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,20 +19,33 @@ import java.util.Map;
 @Transactional(readOnly = true)
 public class WareHouseServiceImpl implements WarehouseService {
 
+    private final WareCategoryRepository wareCategoryRepository;
     private final WareRepository wareRepository;
     private Map<String, Integer> cart;
 
     @Autowired
-    public WareHouseServiceImpl(WareRepository repository) {
-
+    public WareHouseServiceImpl(WareRepository repository,WareCategoryRepository wareCategoryRepository) {
+        this.wareCategoryRepository = wareCategoryRepository;
         this.wareRepository = repository;
         cart = new HashMap<>();
     }
 
     @Transactional
     @Override
-    public boolean createWare(String name, double price, Integer count, WareCategory category) {
-        return false;
+    public boolean createWare(String name, double price, Integer count, String categoryName) {
+        WareCategory category = new WareCategory();
+        category.setCategoryName(categoryName);
+
+        Ware ware1 = new Ware();
+        ware1.setCount(count);
+        ware1.setWareName(name);
+        ware1.setPrice(price);
+        ware1.setWareCategory(category);
+
+        category.setCategory(Arrays.asList(ware1));
+
+        wareCategoryRepository.save(category);
+        return true;
     }
 
     @Transactional
@@ -99,6 +113,16 @@ public class WareHouseServiceImpl implements WarehouseService {
         return true;
     }
 
+    @Override
+    public boolean removeWareFromCart(String name) {
+        if(!cart.containsKey(name)){
+            log.info("Cart dosent contain chosen ware");
+            return false;
+        }
+        cart.remove(name);
+        return true;
+    }
+
     @Transactional
     @Override
     public boolean byWare() {
@@ -119,6 +143,20 @@ public class WareHouseServiceImpl implements WarehouseService {
             return false;
         }
         cart.clear();
+        return true;
+    }
+
+    @Transactional
+    public boolean changeAccess(String name){
+        if (!wareRepository.existsByWareName(name)) {
+            return false;
+        }
+        Ware currentWare=wareRepository.findByWareName(name);
+        if(currentWare.isBlocked()){
+            currentWare.setBlocked(false);
+        }
+        else currentWare.setBlocked(false);
+        wareRepository.save(currentWare);
         return true;
     }
 }

@@ -20,9 +20,8 @@ public class RequestController {
 
     public RequestController(WareRepository wareRepository, WareCategoryRepository wareCategoryRepository) {
         this.wareRepository = wareRepository;
-        //this.productService = productService;
         this.wareCategoryRepository = wareCategoryRepository;
-        wareHouseService=new WareHouseServiceImpl(wareRepository);
+        wareHouseService=new WareHouseServiceImpl(wareRepository,wareCategoryRepository);
     }
 
 
@@ -43,11 +42,6 @@ public class RequestController {
         System.out.println("body: "+ body);
     }
 
-//    @GetMapping
-//    public String  findIdByName(@RequestParam("name") String name){
-//        String s = productService.searchByName(name);
-//        return s;
-//    }
 
 //    @GetMapping("/response")
 //    public ResponseEntity<RequestDto> doResponse() {
@@ -64,39 +58,37 @@ public class RequestController {
 //
 //    }
 
-    @GetMapping("/createWare")
+    @GetMapping("/testCRUD/createNewWare")
     public void createWare() {
-        WareCategory category = new WareCategory();
-        category.setCategoryName("winter_category");
-
-        Ware ware1 = new Ware();
-        ware1.setCount(4);
-        ware1.setWareName("winter_shoes");
-        ware1.setPrice(44.4d);
-        ware1.setWareCategory(category);
-
-        Ware ware2 = new Ware();
-        ware2.setCount(5);
-        ware2.setWareName("spring_shoes");
-        ware2.setPrice(55.5d);
-        ware2.setWareCategory(category);
-
-        category.setCategory(Arrays.asList(ware1, ware2));
-
-        wareCategoryRepository.save(category);
-
+        wareHouseService.createWare("helmet2",23.2d,15,"Motoekip");
     }
 
-    @GetMapping("/buytest")
-    public void buytest(){
+    @GetMapping("/testCRUD/addWare")
+    public void assWare(){
+        wareHouseService.addWare("shoes",8);
+    }
+
+    @GetMapping("/testCRUD/buy")
+    public void buyWare(){
         System.out.println("BuyTest");
         wareHouseService.addWareToCart("shoes2", 3);
         wareHouseService.addWareToCart("shoes", 4);
         wareHouseService.byWare();
     }
 
-    @GetMapping("/deletetest")
+    @GetMapping("/testCRUD/removeByName")
     public void deleteWare(){
         wareHouseService.deleteWare("five");
+    }
+
+    @GetMapping("/testCRUD/reduceByName")
+    public void reduceWare(){
+        wareHouseService.reduceWare("shoes",2);
+    }
+
+    @GetMapping("/testCRUD/changeAccess")
+    public boolean changeAccess(){
+        wareHouseService.changeAccess("shoes2");
+        return true;
     }
 }

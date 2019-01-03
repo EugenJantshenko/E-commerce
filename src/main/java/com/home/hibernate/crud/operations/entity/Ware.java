@@ -32,5 +32,8 @@ public class Ware implements Serializable {
     @JoinColumn(name = "category_id")
     private WareCategory wareCategory;
 
+    @Column(name = "blocked", columnDefinition = "int default 0")
+    private  boolean isBlocked;
+
 
 }
