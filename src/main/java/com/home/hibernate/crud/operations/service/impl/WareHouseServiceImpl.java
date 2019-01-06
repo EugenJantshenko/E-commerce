@@ -10,15 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @Slf4j
@@ -37,6 +32,7 @@ public class WareHouseServiceImpl implements WarehouseService {
         cart = new HashMap<>();
     }
 
+    //region CRUD Methods
     @Transactional
     @Override
     public boolean createWare(String name, double price, Integer count, String categoryName) {
@@ -95,7 +91,6 @@ public class WareHouseServiceImpl implements WarehouseService {
     @Override
     public void clearWarehouse() {
         wareRepository.deleteAll();
-        //context.close();
     }
 
     private boolean checkWareOnWarehouse(String name, Integer count) {
@@ -106,6 +101,8 @@ public class WareHouseServiceImpl implements WarehouseService {
         return false;
     }
 
+    //endregion
+    //region Cart Methods
     @Override
     public boolean addWareToCart(String name, Integer count) {
         if (!checkWareOnWarehouse(name, count)) {
@@ -165,12 +162,12 @@ public class WareHouseServiceImpl implements WarehouseService {
         wareRepository.save(currentWare);
         return true;
     }
+    //endregion
 
-
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-
+    //private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
     @Scheduled(fixedRate = 15000)
     public void checkWareLeft() {
+        SendReportToMail mailsender=new SendReportToMail();
         Iterable<Ware> all = wareRepository.findAll();
 //        List<Ware> less10 = new ArrayList<>();
 //        all.forEach(item -> {
@@ -182,11 +179,14 @@ public class WareHouseServiceImpl implements WarehouseService {
                 .filter(item -> item.getCount() <= 10)
                 .collect(Collectors.toList());
 
-        for (Ware item:wares) {
-            log.info(item.getWareName()+" is less"+" "+item.getCount());
-        }
+        StringBuilder mailMessage=new StringBuilder();
 
+        for (Ware item:wares) {
+            //log.info(item.getWareName()+" is less"+" "+item.getCount());
+            mailMessage.append(item.getWareName()).append(" less").append(item.getCount()).append(" units. \n");
+        }
+        mailsender.SendEmail(mailMessage.toString());
         //System.out.println(wareRepository.count());
-        log.info("The time is now {}", dateFormat.format(new Date()));
+        //log.info("The time is now {}", dateFormat.format(new Date()));
     }
 }
