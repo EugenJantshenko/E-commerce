@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@Table(name = "warecategory")
+@Table(name = "ware_category")
 public class WareCategory implements Serializable {
 
     @Id
@@ -23,5 +23,5 @@ public class WareCategory implements Serializable {
     private String categoryName;
 
     @OneToMany(mappedBy = "wareCategory", cascade = CascadeType.ALL)
-    private List<Ware> category;
+    private List<WareType> categories;
 }

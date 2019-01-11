@@ -22,18 +22,10 @@ public class Ware implements Serializable {
     @Column(name="ware_name" /*,unique = true*/)
     private String wareName;
 
-    @Column(name = "price")
-    private double price;
-
-    @Column(name = "count")
-    private Integer count;
+    @Column(name="serial_number")
+    private String serialNumber;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private WareCategory wareCategory;
-
-    @Column(name = "blocked", columnDefinition = "int default 0")
-    private  boolean isBlocked;
-
-
+    @JoinColumn(name = "type_id")
+    private WareType wareType;
 }
