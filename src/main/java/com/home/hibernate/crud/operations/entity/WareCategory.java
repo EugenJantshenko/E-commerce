@@ -23,5 +23,5 @@ public class WareCategory implements Serializable {
     private String categoryName;
 
     @OneToMany(mappedBy = "wareCategory", cascade = CascadeType.ALL)
-    private List<WareType> categories;
+    private List<WareType> wareTypes;
 }

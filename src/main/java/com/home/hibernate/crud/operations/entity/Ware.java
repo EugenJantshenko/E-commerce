@@ -28,4 +28,7 @@ public class Ware implements Serializable {
     @ManyToOne
     @JoinColumn(name = "type_id")
     private WareType wareType;
+
+    @Column(name = "price")
+    private double price;
 }

@@ -22,6 +22,9 @@ public class WareType implements Serializable {
     @Column(name = "count")
     private Integer count;
 
+    @Column(name = "typeName")
+    private String typeName;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private WareCategory wareCategory;
@@ -32,6 +35,5 @@ public class WareType implements Serializable {
     @Column(name = "blocked", columnDefinition = "int default 0")
     private  boolean isBlocked;
 
-    @Column(name = "price")
-    private double price;
+
 }

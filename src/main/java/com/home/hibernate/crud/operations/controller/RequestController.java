@@ -1,14 +1,14 @@
 package com.home.hibernate.crud.operations.controller;
 
 import com.home.hibernate.crud.operations.dto.RequestDto;
-import com.home.hibernate.crud.operations.entity.Ware;
-import com.home.hibernate.crud.operations.entity.WareCategory;
 import com.home.hibernate.crud.operations.repository.WareCategoryRepository;
 import com.home.hibernate.crud.operations.repository.WareRepository;
+import com.home.hibernate.crud.operations.repository.WareTypeRepository;
 import com.home.hibernate.crud.operations.service.impl.WareHouseServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api")
@@ -16,12 +16,14 @@ public class RequestController {
 
     private final WareRepository wareRepository;
     private final WareCategoryRepository wareCategoryRepository;
+    private final WareTypeRepository wareTypeRepository;
     private final WareHouseServiceImpl wareHouseService;
 
-    public RequestController(WareRepository wareRepository, WareCategoryRepository wareCategoryRepository) {
+    public RequestController(WareRepository wareRepository, WareCategoryRepository wareCategoryRepository, WareTypeRepository wareTypeRepository) {
         this.wareRepository = wareRepository;
         this.wareCategoryRepository = wareCategoryRepository;
-        wareHouseService=new WareHouseServiceImpl(wareRepository,wareCategoryRepository);
+        this.wareTypeRepository = wareTypeRepository;
+        wareHouseService=new WareHouseServiceImpl(wareRepository,wareCategoryRepository,wareTypeRepository);
     }
 
 
@@ -60,7 +62,7 @@ public class RequestController {
 
     @GetMapping("/testCRUD/createNewWare")
     public void createWare() {
-        wareHouseService.createWare("helmet2",23.2d,15,"Motoekip");
+        wareHouseService.createWare("helmet1",22d,134,"Motoekip", LocalDateTime.now(),"Givi","Helmets");
     }
 
     @GetMapping("/testCRUD/addWare")

@@ -11,6 +11,4 @@ public interface WareRepository extends CrudRepository<Ware, Integer> {
     void deleteWareByWareName(String name);
     void deleteByWareName(String name);
 
-//    @Query("delete from Employee ware where WareName = ?1")
-//    void deleteUsingSingleQuery(String firstName);
 }
