@@ -7,6 +7,7 @@ import com.home.hibernate.crud.operations.repository.WareTypeRepository;
 import com.home.hibernate.crud.operations.service.impl.WareHouseServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -93,4 +94,6 @@ public class RequestController {
         //wareHouseService.changeAccess("shoes2");
         return true;
     }
+
+
 }
