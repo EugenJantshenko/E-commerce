@@ -9,6 +9,5 @@ public interface WareRepository extends CrudRepository<Ware, Integer> {
     boolean existsByWareName(String name);
 
     void deleteWareByWareName(String name);
-    void deleteByWareName(String name);
 
 }
