@@ -24,14 +24,14 @@ public class WareHouseServiceImpl implements WarehouseService {
 
     private final WareCategoryRepository wareCategoryRepository;
     private final WareRepository wareRepository;
-    private final WareTypeRepository wareTypeRepositiory;
+    private final WareTypeRepository wareTypeRepository;
     private Map<String, Integer> cart;
 
     @Autowired
-    public WareHouseServiceImpl(WareRepository wareRepository, WareCategoryRepository wareCategoryRepository, WareTypeRepository wareTypeRepositiory) {
+    public WareHouseServiceImpl(WareRepository wareRepository, WareCategoryRepository wareCategoryRepository, WareTypeRepository wareTypeRepository) {
         this.wareCategoryRepository = wareCategoryRepository;
         this.wareRepository = wareRepository;
-        this.wareTypeRepositiory = wareTypeRepositiory;
+        this.wareTypeRepository = wareTypeRepository;
         cart = new HashMap<>();
     }
 
@@ -49,8 +49,8 @@ public class WareHouseServiceImpl implements WarehouseService {
         }
 
         WareType type;
-        if (wareTypeRepositiory.existsWareTypeByTypeName(wareType)) {
-            type = wareTypeRepositiory.findWareTypeByTypeName(wareType);
+        if (wareTypeRepository.existsWareTypeByTypeName(wareType)) {
+            type = wareTypeRepository.findWareTypeByTypeName(wareType);
         }
         else {
             type = new WareType();
@@ -69,7 +69,7 @@ public class WareHouseServiceImpl implements WarehouseService {
 //        type.setWareCategory(category);
 //        category.setCategories(Arrays.asList(ware));
 
-        wareTypeRepositiory.save(type);
+        wareTypeRepository.save(type);
         wareCategoryRepository.save(category);
         wareRepository.save(ware);
         return true;
@@ -194,23 +194,23 @@ public class WareHouseServiceImpl implements WarehouseService {
     public void checkWareLeft() {
         SendReportToMail mailsender = new SendReportToMail();
         Iterable<Ware> all = wareRepository.findAll();
-//        List<Ware> less10 = new ArrayList<>();
-//        all.forEach(item -> {
-//            if (item.getCount() <=10) {
-//                less10.add(item);
-//            }
-//        });
-//        List<WareType> wares = StreamSupport.stream(all.spliterator(), false)
-//                .filter(item -> item.getCount() <= 10)
-//                .collect(Collectors.toList());
-//
-//        StringBuilder mailMessage = new StringBuilder();
-//
-//        for (WareType item : wares) {
-//            //log.info(item.getWareName()+" is less"+" "+item.getCount());
-//            mailMessage.append(item.getWareName()).append(" less").append(item.getCount()).append(" units. \n");
-//        }
-//        mailsender.SendEmail(mailMessage.toString());
+        List<Ware> less10 = new ArrayList<>();
+        all.forEach(item -> {
+            if (item.getCount() <=10) {
+                less10.add(item);
+            }
+        });
+        List<WareType> wares = StreamSupport.stream(all.spliterator(), false)
+                .filter(item -> item.getCount() <= 10)
+                .collect(Collectors.toList());
+
+        StringBuilder mailMessage = new StringBuilder();
+
+        for (WareType item : wares) {
+            //log.info(item.getWareName()+" is less"+" "+item.getCount());
+            mailMessage.append(item.getWareName()).append(" less").append(item.getCount()).append(" units. \n");
+        }
+        mailsender.SendEmail(mailMessage.toString());
         //System.out.println(wareRepository.count());
         //log.info("The time is now {}", dateFormat.format(new Date()));
     }

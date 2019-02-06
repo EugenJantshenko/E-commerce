@@ -5,6 +5,7 @@ import com.home.hibernate.crud.operations.repository.WareCategoryRepository;
 import com.home.hibernate.crud.operations.repository.WareRepository;
 import com.home.hibernate.crud.operations.repository.WareTypeRepository;
 import com.home.hibernate.crud.operations.service.impl.WareHouseServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
@@ -20,6 +21,7 @@ public class RequestController {
     private final WareTypeRepository wareTypeRepository;
     private final WareHouseServiceImpl wareHouseService;
 
+    @Autowired
     public RequestController(WareRepository wareRepository, WareCategoryRepository wareCategoryRepository, WareTypeRepository wareTypeRepository) {
         this.wareRepository = wareRepository;
         this.wareCategoryRepository = wareCategoryRepository;
