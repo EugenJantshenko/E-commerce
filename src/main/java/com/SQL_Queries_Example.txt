@@ -1,0 +1,119 @@
+создать 10 авторов, 40 альбомов, 100 песен(имена песен могут повторятся между авторами)
+каждое задание ниже должно решаться 1 запросом в БД
+
+1) найти все альбомы которые пренадлежат автору с именем Стив
+2) найти все песни которые пренадлежат альбому Альбом1
+3) найти все песни которые пренадлежат автору Стив
+4) найти всех авторов у которых длинна песни меньше 2 мин.
+5) найти все альбомы у которых имя автора начинается на 'Ст'
+6) посчитать сколько авторов имеют альбомы с более чем 4 песнями
+7) найти всех авторов у которых блее 3-х песен и длина песни более 4-х минут
+8) найти по каждому автору сумму времени всех песен по каждому албому
+9) найти все уникальные имена песен
+10) вывести все имена песен и количество раз которое они повторяются и их число больше 1
+
+
+select * from queries.author;
+
+select * from queries.album;
+
+select * from queries.song;
+
+
+
+
+/*1*/
+select * from album
+inner join author
+on author.id=album.author_id
+where author.name='second';
+
+
+/*2*/
+select * from song
+inner join album
+on album.id=song.albom_id
+where album.name='album1';
+
+
+/*3*/
+select * from song
+inner join album
+on song.albom_id=album.id
+inner join author
+on album.author_id=author.id
+where author.name='third';
+
+
+/*4*/
+select * from author
+inner join album
+on author.id=album.author_id
+inner join song
+on album.id=song.albom_id
+where song.duration<120;
+
+
+/*5*/
+select * from album
+inner join author
+on author.id=album.author_id
+where author.name like 'se%';
+
+
+/*6*/
+select au.name, al.name, count(so.albom_id) as song_count
+from author au
+inner join album al on au.id = al.author_id
+inner join song so on al.id = so.albom_id
+group by so.albom_id -- , au.name
+having song_count > 3;
+
+select * from author au
+inner join album al on au.id = al.author_id
+inner join song so on al.id = so.albom_id;
+
+/*7*/
+select au.name, al.name, count(so.albom_id) as song_count
+from author au
+inner join album al on au.id = al.author_id
+inner join song so on al.id = so.albom_id
+where so.duration>240
+group by so.albom_id
+having song_count > 2;
+
+
+/*8*/
+select au.name,sum(so.duration) as allsongdauratin
+from author au
+inner join album al on au.id=al.author_id
+inner join song so on al.id=so.albom_id
+group by au.name;
+
+
+/*9*/
+select distinct song.name from song;
+
+
+/*10*/
+select distinct song.name
+ ,count(song.albom_id) as songscount
+from song
+group by song.name
+having songscount>4;
+
+FROM
+WHERE
+GROUP BY
+HAVING
+SELECT
+ORDER BY
+Этот порядок не соответствует синтаксическому порядку общего представления оператора SELECT, который ближе к естественному языку:
+
+SELECT [DISTINCT | ALL]{*
+ | [<выражение для столбца> [[AS] <псевдоним>]] [,…]}
+FROM <имя таблицы> [[AS] <псевдоним>] [,…]
+[WHERE <предикат>]
+[[GROUP BY <список столбцов>]
+[HAVING <условие на агрегатные значения>] ]
+[ORDER BY <список столбцов>]
