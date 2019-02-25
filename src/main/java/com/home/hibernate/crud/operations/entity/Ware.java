@@ -31,4 +31,13 @@ public class Ware implements Serializable {
 
     @Column(name = "price")
     private double price;
+
+    @Basic
+    private java.sql.Date receivedDate;
+
+    @Basic
+    private java.sql.Date sealedDate;
+
+    @Column(name="sealed",columnDefinition = "int default 0")
+    private boolean isSealed;
 }
