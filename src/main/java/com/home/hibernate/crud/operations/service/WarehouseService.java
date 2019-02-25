@@ -1,5 +1,6 @@
 package com.home.hibernate.crud.operations.service;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 public interface WarehouseService {
@@ -11,6 +12,7 @@ public interface WarehouseService {
     public boolean reduceWare(String name, Integer count);
     public boolean deleteWare(String name);
     public void clearWarehouse();
+    void setReceievedDate();
 
     //Customer functional
     public boolean addWareToCart(String name, Integer count);

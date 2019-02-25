@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-
-import org.springframework.scheduling.annotation.Scheduled;
 
 @Slf4j
 @Service
@@ -42,8 +42,7 @@ public class WareHouseServiceImpl implements WarehouseService {
         WareCategory category;
         if (wareCategoryRepository.existsWareCategoryByCategoryName(wareCategory)) {
             category = wareCategoryRepository.findWareCategoryByCategoryName(wareCategory);
-        }
-        else {
+        } else {
             category = new WareCategory();
             category.setCategoryName(wareCategory);
         }
@@ -51,12 +50,10 @@ public class WareHouseServiceImpl implements WarehouseService {
         WareType type;
         if (wareTypeRepository.existsWareTypeByTypeName(wareType)) {
             type = wareTypeRepository.findWareTypeByTypeName(wareType);
-        }
-        else {
+        } else {
             type = new WareType();
             type.setTypeName(wareType);
         }
-
 
 
         Ware ware = new Ware();
@@ -115,6 +112,16 @@ public class WareHouseServiceImpl implements WarehouseService {
     @Override
     public void clearWarehouse() {
         wareRepository.deleteAll();
+    }
+
+    @Transactional
+    @Override
+    public void setReceievedDate() {
+        for (int i = 1; i <= wareRepository.count(); i++) {
+            Ware currentWare = wareRepository.getWareById(i);
+            currentWare.setReceivedDate(java.sql.Date.valueOf(LocalDate.now()));
+            wareRepository.save(currentWare);
+        }
     }
 
 //    private boolean checkWareOnWarehouse(String name, Integer count) {
@@ -176,18 +183,29 @@ public class WareHouseServiceImpl implements WarehouseService {
 
     @Transactional
     public boolean changeAccess(String name) {
-//        if (!wareRepository.existsByWareName(name)) {
-//            return false;
-//        }
-//        WareType currentWare = wareRepository.findByWareName(name);
+        if (!wareRepository.existsByWareName(name)) {
+            return false;
+        }
+        Ware currentWare = wareRepository.findByWareName(name);
+        if (currentWare.getWareType().isBlocked()) {
+            currentWare.getWareType().setBlocked(false);
+        } else {
+            currentWare.getWareType().setBlocked(true);
+        }
+
 //        if (currentWare.isBlocked()) {
 //            currentWare.setBlocked(false);
 //        } else currentWare.setBlocked(false);
-//        wareRepository.save(currentWare);
+        wareRepository.save(currentWare);
         return true;
     }
-    //endregion
 
+    @Transactional
+    public boolean getTest(String name){
+        Ware currentWare=wareRepository.findByWareName(name);
+        System.out.println(currentWare.getWareName());
+        return true;
+    }
 //    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 

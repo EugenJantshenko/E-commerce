@@ -47,22 +47,6 @@ public class RequestController {
         System.out.println("body: "+ body);
     }
 
-
-//    @GetMapping("/response")
-//    public ResponseEntity<RequestDto> doResponse() {
-//
-//        //do stuff
-//
-//        RequestDto dto = RequestDto.builder()
-//                .price(44d)
-//                .shopsList(Arrays.asList("one", "two", "three"))
-//                .build();
-//
-//        return ResponseEntity.status(HttpStatus.OK)
-//                .body(dto);
-//
-//    }
-
     @GetMapping("/testCRUD/createNewWare")
     public void createWare() {
         wareHouseService.createWare("helmet1",22d,134,"Motoekip", LocalDateTime.now(),"Givi","Helmets");
@@ -93,9 +77,20 @@ public class RequestController {
 
     @GetMapping("/testCRUD/changeAccess")
     public boolean changeAccess(){
-        //wareHouseService.changeAccess("shoes2");
+        wareHouseService.changeAccess("EnduroHelmet Groove");
         return true;
     }
 
+    @GetMapping("/testCRUD/setRecievedDate")
+    public boolean setRecievedDate(){
+        wareHouseService.setReceievedDate();
+        return true;
+    }
+
+    @GetMapping("/testCRUD/Get")
+    public boolean getTest(){
+        wareHouseService.getTest("EnduroHelmet Groove");
+        return true;
+    }
 
 }
