@@ -12,11 +12,11 @@ public interface WarehouseService {
 
     public boolean deleteWare(String name);
 
-    public boolean changeWare(String name, double price, String serialNumber, String wareType, LocalDateTime buyDate,  String wareCategory);
-    public boolean changeWare(String name, double price, String serialNumber, String wareType, LocalDateTime buyDate);
-    public boolean changeWare(String name, double price, String serialNumber, String wareType);
-    public boolean changeWare(String name, double price, String serialNumber);
-    public boolean changeWare(String name, double price);
+//    public boolean changeWare(String name, double price, String serialNumber, String wareType, LocalDateTime buyDate,  String wareCategory);
+//    public boolean changeWare(String name, double price, String serialNumber, String wareType, LocalDateTime buyDate);
+//    public boolean changeWare(String name, double price, String serialNumber, String wareType);
+//    public boolean changeWare(String name, double price, String serialNumber);
+//    public boolean changeWare(String name, double price);
 
 
     public void clearWarehouse();

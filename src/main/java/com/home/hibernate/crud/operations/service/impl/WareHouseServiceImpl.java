@@ -36,40 +36,11 @@ public class WareHouseServiceImpl implements WarehouseService {
     }
 
     //region CRUD Methods
+
     @Transactional
     @Override
-    public boolean createWare(String name, double price, Integer numberOnWarehouse, String wareType, LocalDateTime buyDate, String customer, String wareCategory) {
-        WareCategory category;
-        if (wareCategoryRepository.existsWareCategoryByCategoryName(wareCategory)) {
-            category = wareCategoryRepository.findWareCategoryByCategoryName(wareCategory);
-        } else {
-            category = new WareCategory();
-            category.setCategoryName(wareCategory);
-        }
-
-        WareType type;
-        if (wareTypeRepository.existsWareTypeByTypeName(wareType)) {
-            type = wareTypeRepository.findWareTypeByTypeName(wareType);
-        } else {
-            type = new WareType();
-            type.setTypeName(wareType);
-        }
-
-
-        Ware ware = new Ware();
-        ware.setWareName(name);
-        ware.setPrice(price);
-        ware.setSerialNumber("125sdf4");
-
-        ware.setWareType(type);
-
-//        type.setWareCategory(category);
-//        category.setCategories(Arrays.asList(ware));
-
-        wareTypeRepository.save(type);
-        wareCategoryRepository.save(category);
-        wareRepository.save(ware);
-        return true;
+    public boolean createWare(String name, double price, String serialNumber, String wareType, LocalDateTime receivedDate, String wareCategory) {
+        return false;
     }
 
     @Transactional
@@ -84,17 +55,6 @@ public class WareHouseServiceImpl implements WarehouseService {
         return true;
     }
 
-    @Transactional
-    @Override
-    public boolean reduceWare(String name, Integer count) {
-//        if (!checkWareOnWarehouse(name, count)) {
-//            return false;
-//        }
-//        Ware currentWare = wareRepository.findByWareName(name);
-//        currentWare.setCount(currentWare.getCount() - count);
-//        wareRepository.save(currentWare);
-        return true;
-    }
 
     @Transactional
     @Override
