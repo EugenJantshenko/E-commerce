@@ -18,6 +18,7 @@ public interface WarehouseService {
     public boolean changeWare(String name, double price, String serialNumber);
     public boolean changeWare(String name, double price);
 
+
     public void clearWarehouse();
 
     void setReceievedDate();
