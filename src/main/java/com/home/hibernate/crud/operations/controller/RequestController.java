@@ -81,8 +81,8 @@ public class RequestController {
         return true;
     }
 
-    @GetMapping("/testCRUD/setRecievedDate")
-    public boolean setRecievedDate(){
+    @GetMapping("/testCRUD/setReceivedDate")
+    public boolean setReceivedDate(){
         wareHouseService.setReceievedDate();
         return true;
     }
