@@ -36,25 +36,25 @@ public class WareHouseServiceImpl implements WarehouseService {
     }
 
     //region CRUD Methods
+    @Transactional
+    @Override
+    public boolean createNewWare(Ware ware) {
+        if (!wareRepository.existsByWareName(ware.getWareName())) {
+            wareRepository.save(ware);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     @Transactional
     @Override
-    public boolean createWare(String name, double price, String serialNumber, String wareType, LocalDateTime receivedDate, String wareCategory) {
+    public boolean changeWare(Ware ware) {
+        if(wareRepository.existsByWareName(ware.getWareName())){
+
+        }
         return false;
     }
-
-    @Transactional
-    @Override
-    public boolean addWare(String name, Integer count) {
-//        if (!wareRepository.existsByWareName(name)) {
-//            return false;
-//        }
-//        Ware currentWare = wareRepository.findByWareName(name);
-//        currentWare.setCount(currentWare.getCount() + count);
-//        wareRepository.save(currentWare);
-        return true;
-    }
-
 
     @Transactional
     @Override
@@ -84,15 +84,8 @@ public class WareHouseServiceImpl implements WarehouseService {
         }
     }
 
-//    private boolean checkWareOnWarehouse(String name, Integer count) {
-//        if (wareRepository.existsByWareName(name) &&
-//                (wareRepository.findByWareName(name).getCount() > count)) {
-//            return true;
-//        }
-//        return false;
-//    }
-
     //endregion
+
     //region Cart Methods
     @Override
     public boolean addWareToCart(String name, Integer count) {
@@ -161,8 +154,8 @@ public class WareHouseServiceImpl implements WarehouseService {
     }
 
     @Transactional
-    public boolean getTest(String name){
-        Ware currentWare=wareRepository.findByWareName(name);
+    public boolean getTest(String name) {
+        Ware currentWare = wareRepository.findByWareName(name);
         System.out.println(currentWare.getWareName());
         return true;
     }

@@ -1,6 +1,7 @@
 package com.home.hibernate.crud.operations.controller;
 
 import com.home.hibernate.crud.operations.dto.RequestDto;
+import com.home.hibernate.crud.operations.entity.Ware;
 import com.home.hibernate.crud.operations.repository.WareCategoryRepository;
 import com.home.hibernate.crud.operations.repository.WareRepository;
 import com.home.hibernate.crud.operations.repository.WareTypeRepository;
@@ -8,9 +9,7 @@ import com.home.hibernate.crud.operations.service.impl.WareHouseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api")
@@ -29,33 +28,29 @@ public class RequestController {
         wareHouseService=new WareHouseServiceImpl(wareRepository,wareCategoryRepository,wareTypeRepository);
     }
 
-
-    @GetMapping("/{versionId}/test")
-    public String getList(@PathVariable("versionId") String pathVariable,
-                          @RequestParam("one") String one,
-                          @RequestParam(value = "two", required = false) String two) {
-
-        System.out.println("pathVariable: "+ pathVariable);
-        System.out.println("one: "+ one);
-        System.out.println("two: "+ two);
-
-        return "response from controller ";
-    }
-
-    @PostMapping("/products")
-    public void postRequest(@RequestBody RequestDto body) {
-        System.out.println("body: "+ body);
-    }
+    // WareHouseServices methods
 
     @GetMapping("/testCRUD/createNewWare")
-    public void createWare() {
-        wareHouseService.createWare("helmet1",22d,134,"Motoekip", LocalDateTime.now(),"Givi","Helmets");
+    public boolean createWare() {
+        Ware newWare=new Ware();
+        newWare.setWareName("TestWare2");
+        newWare.setWareType(wareTypeRepository.findWareTypeById(1));
+        newWare.setReceivedDate(java.sql.Date.valueOf(LocalDate.now()));
+        newWare.setSerialNumber("serial test");
+        newWare.setPrice(255);
+        return wareHouseService.createNewWare(newWare);
     }
 
-    @GetMapping("/testCRUD/addWare")
-    public void assWare(){
-        wareHouseService.addWare("shoes",8);
+    @PostMapping("/testCRUD/createNewWare")
+    public void createNewWare(@RequestBody Ware ware) {
+        System.out.println("body: "+ ware);
+        wareHouseService.createNewWare(ware);
     }
+
+
+
+
+
 
     @GetMapping("/testCRUD/buy")
     public void buyWare(){
@@ -70,10 +65,10 @@ public class RequestController {
         wareHouseService.deleteWare("five");
     }
 
-    @GetMapping("/testCRUD/reduceByName")
-    public void reduceWare(){
-        wareHouseService.reduceWare("shoes",2);
-    }
+//    @GetMapping("/testCRUD/reduceByName")
+//    public void reduceWare(){
+//        wareHouseService.reduceWare("shoes",2);
+//    }
 
     @GetMapping("/testCRUD/changeAccess")
     public boolean changeAccess(){
@@ -92,5 +87,23 @@ public class RequestController {
         wareHouseService.getTest("EnduroHelmet Groove");
         return true;
     }
+
+    @GetMapping("/{versionId}/test")
+    public String getList(@PathVariable("versionId") String pathVariable,
+                          @RequestParam("one") String one,
+                          @RequestParam(value = "two", required = false) String two) {
+
+        System.out.println("pathVariable: "+ pathVariable);
+        System.out.println("one: "+ one);
+        System.out.println("two: "+ two);
+
+        return "response from controller ";
+    }
+
+    @PostMapping("/products")
+    public void postRequest(@RequestBody RequestDto body) {
+        System.out.println("body: "+ body);
+    }
+
 
 }

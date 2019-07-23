@@ -9,7 +9,8 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/tutorialdb?useJDBCCompliantTimezoneShift=true&serverTimezone=UTC
     username: root
-    password: 05941987Jeka
+    password: root
+
 
 logging:
   level:
