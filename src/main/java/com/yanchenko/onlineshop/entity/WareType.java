@@ -1,4 +1,4 @@
-package com.home.hibernate.crud.operations.entity;
+package com.yanchenko.onlineshop.entity;
 
 import lombok.*;
 

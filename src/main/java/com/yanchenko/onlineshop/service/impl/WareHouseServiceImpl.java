@@ -1,12 +1,12 @@
-package com.home.hibernate.crud.operations.service.impl;
+package com.yanchenko.onlineshop.service.impl;
 
-import com.home.hibernate.crud.operations.entity.Ware;
-import com.home.hibernate.crud.operations.entity.WareCategory;
-import com.home.hibernate.crud.operations.entity.WareType;
-import com.home.hibernate.crud.operations.repository.WareCategoryRepository;
-import com.home.hibernate.crud.operations.repository.WareRepository;
-import com.home.hibernate.crud.operations.repository.WareTypeRepository;
-import com.home.hibernate.crud.operations.service.WarehouseService;
+import com.yanchenko.onlineshop.entity.Ware;
+import com.yanchenko.onlineshop.entity.WareCategory;
+import com.yanchenko.onlineshop.entity.WareType;
+import com.yanchenko.onlineshop.repository.WareCategoryRepository;
+import com.yanchenko.onlineshop.repository.WareRepository;
+import com.yanchenko.onlineshop.repository.WareTypeRepository;
+import com.yanchenko.onlineshop.service.WarehouseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 //import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Slf4j
@@ -72,6 +71,21 @@ public class WareHouseServiceImpl implements WarehouseService {
     @Override
     public void clearWarehouse() {
         wareRepository.deleteAll();
+    }
+
+    @Override
+    public List<Ware> showWareList() {
+        return wareRepository.findAllByIdIsNotNull();
+    }
+
+    @Override
+    public List<WareType> showWareTypeList() {
+        return wareTypeRepository.findAllByIdIsNotNull();
+    }
+
+    @Override
+    public List<WareCategory> showWareCategoryList() {
+        return wareCategoryRepository.findAllByIdIsNotNull();
     }
 
     @Transactional

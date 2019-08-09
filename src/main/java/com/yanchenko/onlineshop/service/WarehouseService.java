@@ -1,8 +1,10 @@
-package com.home.hibernate.crud.operations.service;
+package com.yanchenko.onlineshop.service;
 
-import com.home.hibernate.crud.operations.entity.Ware;
+import com.yanchenko.onlineshop.entity.Ware;
+import com.yanchenko.onlineshop.entity.WareCategory;
+import com.yanchenko.onlineshop.entity.WareType;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 public interface WarehouseService {
 
@@ -13,6 +15,10 @@ public interface WarehouseService {
     public boolean deleteWare(String name);
 
     public void clearWarehouse();
+
+    public List<Ware> showWareList();
+    public List<WareType> showWareTypeList();
+    public List<WareCategory> showWareCategoryList();
 
     void setReceievedDate();
 

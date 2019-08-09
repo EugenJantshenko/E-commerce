@@ -1,9 +1,9 @@
-package com.home.hibernate.crud.operations.repository;
+package com.yanchenko.onlineshop.repository;
 
-import com.home.hibernate.crud.operations.entity.Ware;
+import com.yanchenko.onlineshop.entity.Ware;
 import org.springframework.data.repository.CrudRepository;
 
-import java.sql.Date;
+import java.util.List;
 
 public interface WareRepository extends CrudRepository<Ware, Integer> {
 
@@ -11,6 +11,8 @@ public interface WareRepository extends CrudRepository<Ware, Integer> {
     boolean existsByWareName(String name);
 
     Ware getWareById(Integer id);
+
+    List<Ware> findAllByIdIsNotNull();
 
     void deleteWareByWareName(String name);
 

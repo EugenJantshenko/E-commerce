@@ -1,0 +1,34 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>calculator</title>
+
+</head>
+<body>
+<h1>Add Ware</h1>
+
+<h3>Welcome, Enter The Ware Details</h3>
+<form method="POST"
+      action="/admin/addWare" modelAttribute="ware">
+    <table>
+        <tr>
+            <td><label path="wareName"></label></td>
+            <td><input path="wareName"/></td>
+        </tr>
+        <tr>
+            <td><label path="id"></label></td>
+            <td><input path="id"/></td>
+        </tr>
+        <tr>
+            <td><label path="price"></label></td>
+            <td><input path="price"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit Data"/></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>List of all wares</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .persons, .persons td {
+            border: 1px solid lightgray;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>Wares:</h1>
+
+<table class="persons">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Type Name</th>
+        <th>Is Blocked to Sell</th>
+        <th>Ware Category</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="type : ${types}">
+        <td th:text="${type.getId()}">Id</td>
+        <td th:text="${type.getTypeName()}">Type Name</td>
+        <td th:text="${type.isBlocked()}">Not Blocked</td>
+        <td th:text="${type.getWareCategory().getId()}">Ware Category</td>
+<!--        <td>-->
+<!--            <a th:href="@{/person(id=${type.isBlocked()})}" href="person.html">Просмотреть</a>-->
+<!--        </td>-->
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

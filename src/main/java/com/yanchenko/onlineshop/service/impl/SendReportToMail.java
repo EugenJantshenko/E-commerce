@@ -1,4 +1,4 @@
-package com.home.hibernate.crud.operations.service.impl;
+package com.yanchenko.onlineshop.service.impl;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

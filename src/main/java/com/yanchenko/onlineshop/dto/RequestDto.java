@@ -1,4 +1,4 @@
-package com.home.hibernate.crud.operations.dto;
+package com.yanchenko.onlineshop.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
