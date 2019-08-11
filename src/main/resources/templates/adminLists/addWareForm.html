@@ -9,25 +9,32 @@
 <h1>Add Ware</h1>
 
 <h3>Welcome, Enter The Ware Details</h3>
-<form method="POST"
-      action="/admin/addWare" modelAttribute="ware">
-    <table>
-        <tr>
-            <td><label path="wareName"></label></td>
-            <td><input path="wareName"/></td>
-        </tr>
-        <tr>
-            <td><label path="id"></label></td>
-            <td><input path="id"/></td>
-        </tr>
-        <tr>
-            <td><label path="price"></label></td>
-            <td><input path="price"/></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Submit Data"/></td>
-        </tr>
-    </table>
+<form method="POST" action="/admin/addWare" modelAttribute="ware">
+    <p>
+        <th:text="Name"></th:text>
+    <input th:type="text" name="id">
+    </p>
+
+    <input th:type="text" name="wareName">
+    <input th:type="text" name="price">
+    <td><input type="submit" value="Submit"/></td>
+    <!--    -->
+    <!--    <table>-->
+    <!--        <tr>-->
+    <!--            <td><label path="wareName"></label></td>-->
+    <!--            <td><input path="wareName"/></td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td><label path="id"></label></td>-->
+    <!--            <td><input path="id"/></td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td><label path="price"></label></td>-->
+    <!--            <td><input path="price"/></td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+<!--        </tr>-->
+<!--    </table>-->
 </form>
 
 </body>

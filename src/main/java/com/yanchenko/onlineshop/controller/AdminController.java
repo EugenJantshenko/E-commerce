@@ -1,6 +1,7 @@
 package com.yanchenko.onlineshop.controller;
 
 import com.yanchenko.onlineshop.domain.Employee;
+import com.yanchenko.onlineshop.dto.FormDto;
 import com.yanchenko.onlineshop.entity.Ware;
 import com.yanchenko.onlineshop.entity.WareCategory;
 import com.yanchenko.onlineshop.entity.WareType;
@@ -67,7 +68,7 @@ public class AdminController {
 
 
     @RequestMapping(value = "/addWare", method = RequestMethod.POST)
-    public String addWare(@ModelAttribute("ware") Ware ware,
+    public String addWare(@ModelAttribute("ware") FormDto ware,
                          BindingResult result, ModelMap model) {
         if (result.hasErrors()) {
             System.out.println("error");
