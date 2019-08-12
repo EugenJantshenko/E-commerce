@@ -9,7 +9,7 @@ public class SendReportToMail {
 
     public  void SendEmail(String textmessage) {
         final String username = "dreamerwalker@gmail.com";
-        final String password = "t3k9ru4j";
+        final String password = "";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");

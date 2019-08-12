@@ -1,0 +1,46 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>calculator</title>
+
+</head>
+<body>
+<h1>Add Ware</h1>
+
+<h3>Welcome, Enter The Ware Details</h3>
+<form name="f" method="POST" th:object="${wareTypeForm}" action="/admin/wares/add" modelAttribute="wareDto">
+    ID:<br>
+    <input th:type="text" name="id"><br>
+    Ware Name:<br>
+    <input th:type="text" name="wareName"><br>
+    Serial Number:<br>
+    <input th:type="text" name="serialNumber"><br>
+    Type:<br>
+
+
+    <select name="wareType">
+<!--    <select th:field="*{typeId}">-->
+        <option value=""> --</option>
+        <option th:each="type : ${types}"
+                th:value="${type.getId()}"
+                th:utext="${type.getTypeName()}"></option>
+    </select>
+
+
+    <br>
+    Price:<br>
+    <input th:type="text" name="price"><br>
+    Received Date:<br>
+    <input th:type="date" name="receivedDate"><br>
+    Sealed Date:<br>
+    <input th:type="date" name="sealedDate"><br>
+    Is sealed:<br>
+    <input th:type="checkbox" name="isSealed" value="true">
+    <br>
+    <td><input type="submit" value="submit"/></td>
+    <input type="reset">
+</form>
+
+</body>
+</html>

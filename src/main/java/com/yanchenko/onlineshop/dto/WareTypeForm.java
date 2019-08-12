@@ -5,8 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class FormDto {
-    private String id;
-    private String wareName;
-    private String price;
+public class WareTypeForm {
+    private String fullName;
+    private Long typeId;
 }

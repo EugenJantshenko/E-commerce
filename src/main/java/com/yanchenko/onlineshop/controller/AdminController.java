@@ -1,7 +1,7 @@
 package com.yanchenko.onlineshop.controller;
 
-import com.yanchenko.onlineshop.domain.Employee;
-import com.yanchenko.onlineshop.dto.FormDto;
+import com.yanchenko.onlineshop.dto.WareDto;
+import com.yanchenko.onlineshop.dto.WareTypeForm;
 import com.yanchenko.onlineshop.entity.Ware;
 import com.yanchenko.onlineshop.entity.WareCategory;
 import com.yanchenko.onlineshop.entity.WareType;
@@ -39,21 +39,21 @@ public class AdminController {
         wareHouseService = new WareHouseServiceImpl(wareRepository, wareCategoryRepository, wareTypeRepository);
     }
 
-    @GetMapping("/allWares")
+    @GetMapping("/wares")
     public String showAllWare(Model model) {
         List<Ware> wares= wareHouseService.showWareList();
         model.addAttribute("wares", wares);
         return "listAllWares";
     }
 
-    @GetMapping("/allTypes")
+    @GetMapping("/types")
     public String showAllTypes(Model model){
         List<WareType> types =wareHouseService.showWareTypeList();
         model.addAttribute("types", types);
         return "listAllWareTypes";
     }
 
-    @GetMapping("/allCategories")
+    @GetMapping("/categories")
     public String showAllCategories(Model model){
         List<WareCategory> categories =wareHouseService.showWareCategoryList();
         model.addAttribute("categories", categories);
@@ -62,13 +62,17 @@ public class AdminController {
 
 
     @GetMapping("/giveMeForm")
-    public String getAddWareForm() {
-        return "adminLists/addWareForm";
+    public String getAddWareForm(Model model) {
+        WareTypeForm form =new WareTypeForm();
+        model.addAttribute("wareTypeForm", form);
+        List<WareType> typeList= wareHouseService.showWareTypeList();
+        model.addAttribute("types", typeList);
+        return "adminLists/wares/add";
     }
 
 
-    @RequestMapping(value = "/addWare", method = RequestMethod.POST)
-    public String addWare(@ModelAttribute("ware") FormDto ware,
+    @RequestMapping(value = "/wares/add", method = RequestMethod.POST)
+    public String addWare(@ModelAttribute("wareDto") WareDto ware,
                          BindingResult result, ModelMap model) {
         if (result.hasErrors()) {
             System.out.println("error");
@@ -77,7 +81,6 @@ public class AdminController {
         else {
             System.out.println(ware.toString());
             model.addAttribute("ware", ware);
-
         }
         return "ware";
     }
