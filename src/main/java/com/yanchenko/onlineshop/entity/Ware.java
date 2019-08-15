@@ -19,10 +19,13 @@ public class Ware implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="ware_name" /*,unique = true*/)
+    @Column(name = "ware_name" /*,unique = true*/)
     private String wareName;
 
-    @Column(name="serial_number")
+    @Column(name = "manufacturer")
+    private String manufacturer;
+
+    @Column(name = "serial_number")
     private String serialNumber;
 
     @ManyToOne
@@ -38,6 +41,6 @@ public class Ware implements Serializable {
     @Basic
     private java.sql.Date sealedDate;
 
-    @Column(name="sealed",columnDefinition = "int default 0")
+    @Column(name = "sealed", columnDefinition = "int default 0")
     private boolean isSealed;
 }

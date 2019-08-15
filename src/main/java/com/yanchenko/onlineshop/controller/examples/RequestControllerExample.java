@@ -53,7 +53,7 @@ public class RequestControllerExample {
         System.out.println("BuyTest");
         wareHouseService.addWareToCart("shoes2", 3);
         wareHouseService.addWareToCart("shoes", 4);
-        wareHouseService.byWare();
+        wareHouseService.buyWareInCart();
     }
 
     @GetMapping("/testCRUD/removeByName")
@@ -74,13 +74,13 @@ public class RequestControllerExample {
 
     @GetMapping("/testCRUD/setReceivedDate")
     public boolean setReceivedDate() {
-        wareHouseService.setReceievedDate();
+//        wareHouseService.setReceievedDate();
         return true;
     }
 
     @GetMapping("/testCRUD/Get")
     public boolean getTest() {
-        wareHouseService.getTest("EnduroHelmet Groove");
+//        wareHouseService.getTest("EnduroHelmet Groove");
         return true;
     }
 

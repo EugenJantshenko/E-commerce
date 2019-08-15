@@ -84,7 +84,7 @@ having song_count > 2;
 
 
 /*8*/
-select au.name,sum(so.duration) as allsongdauratin
+select au.name,sum(so.duration) as allsongdauratoin
 from author au
 inner join album al on au.id=al.author_id
 inner join song so on al.id=so.albom_id

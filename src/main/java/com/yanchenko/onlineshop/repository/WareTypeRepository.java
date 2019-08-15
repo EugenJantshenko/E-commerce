@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface WareTypeRepository extends CrudRepository<WareType, Integer> {
     WareType findWareTypeByTypeName(String name);
+
     boolean existsWareTypeByTypeName(String name);
+
     WareType findWareTypeById(Integer id);
+
     List<WareType> findAllByIdIsNotNull();
 }

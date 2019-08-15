@@ -8,12 +8,21 @@ import java.util.List;
 public interface WareRepository extends CrudRepository<Ware, Integer> {
 
     Ware findByWareName(String name);
-    boolean existsByWareName(String name);
 
     Ware getWareById(Integer id);
 
+    boolean existsByWareName(String name);
+
+    boolean existsById(Integer id);
+
+    boolean existsByManufacturer(String manufacturer);
+
     List<Ware> findAllByIdIsNotNull();
 
-    void deleteWareByWareName(String name);
+    List<Ware> findAllByManufacturer(String manufacturer);
+
+    boolean deleteWareById(Integer id);
+
+    boolean deleteWareByWareName(String name);
 
 }

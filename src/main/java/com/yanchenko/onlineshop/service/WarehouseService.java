@@ -4,26 +4,46 @@ import com.yanchenko.onlineshop.entity.Ware;
 import com.yanchenko.onlineshop.entity.WareCategory;
 import com.yanchenko.onlineshop.entity.WareType;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface WarehouseService {
 
     //Administration functional
 
-    public boolean createNewWare(Ware ware);
-    public boolean changeWare(Ware ware);
-    public boolean deleteWare(String name);
+    boolean createNewWare(Ware ware);
 
-    public void clearWarehouse();
+    boolean changeWare(Ware ware);
 
-    public List<Ware> showWareList();
-    public List<WareType> showWareTypeList();
-    public List<WareCategory> showWareCategoryList();
+    boolean deleteWare(String name);
 
-    void setReceievedDate();
+    boolean deleteWare(Integer id);
+
+    boolean createNewWareType(String wareType, Integer category);
+
+    boolean createNewWareCategory(String wareCategory);
+
+    List<Ware> showWareList();
+
+    List<WareType> showWareTypeList();
+
+    List<WareCategory> showWareCategoryList();
+
+    List<Ware> showManufacturerList(String manufacturer);
+
+    void setReceivedDate(Integer wareID, Date receivedDate);
+
+    void setSealedDate(Integer wareID, Date sealedDate);
+
+    public boolean changeAccess(String typeName);
+
+    void clearWarehouse();
 
     //Customer functional
-    public boolean addWareToCart(String name, Integer count);
-    public boolean removeWareFromCart(String name);
-    public boolean byWare();
+
+    boolean addWareToCart(String name, Integer count);
+
+    boolean removeWareFromCart(String name);
+
+    boolean buyWareInCart();
 }

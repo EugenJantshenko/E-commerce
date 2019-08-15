@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class SendReportToMail {
 
-    public  void SendEmail(String textmessage) {
+    public void SendEmail(String textmessage) {
         final String username = "dreamerwalker@gmail.com";
         final String password = "";
 
@@ -24,14 +24,12 @@ public class SendReportToMail {
                     }
                 });
         try {
-
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("from-email@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("dreamerwalker@gmail.com"));
             message.setSubject("Shop Subject");
             //message.setText("Dear Mail Crawler,\n\n No spam to my email, please!");
             message.setText(textmessage);
-
             Transport.send(message);
             System.out.println("Done");
         } catch (MessagingException e) {

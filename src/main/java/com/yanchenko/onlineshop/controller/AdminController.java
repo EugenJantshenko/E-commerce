@@ -85,4 +85,8 @@ public class AdminController {
         return "ware";
     }
 
+    @GetMapping("/fillUp")
+    public void fillUpTable(){
+        wareHouseService.filUpTable();
+    }
 }
