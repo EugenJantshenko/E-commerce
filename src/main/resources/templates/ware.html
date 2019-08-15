@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="en" xmlns:th="http://www.thymeleaf.org">
+        <head>
+            <meta charset="UTF-8"/>
+            <title>Ware page</title>
+            <style type="text/css">
+                body {
+                    padding: 50px;
+                }
+
+                label {
+                    display: inline-block;
+                    width: 100px;
+                }
+
+                input:read-only {
+                    background: lightgray;
+                }
+
+                .row {
+                    margin-top: 10px;
+                }
+            </style>
+        </head>
+<body>
+
+<h1>Ware Info:</h1>
+
+<span th:text="'id: ' + ${ware}"></span>
+
+</body>
+</html>

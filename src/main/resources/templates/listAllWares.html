@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>List of all wares</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .persons, .persons td {
+            border: 1px solid lightgray;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>Wares:</h1>
+
+<table class="persons">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Sealed</th>
+        <th>Price</th>
+        <th>Received date</th>
+        <th>Sealed date</th>
+        <th>Serial Number</th>
+        <th>Ware Name</th>
+        <th>Type ID</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ware : ${wares}">
+        <td th:text="${ware.getId()}">ID</td>
+        <td th:text="${ware.isSealed()}">Ware Name</td>
+        <td th:text="${ware.getPrice()}">Price</td>
+        <td th:text="${ware.getReceivedDate()}">Received Date</td>
+        <td th:text="${ware.getSealedDate()}">Sealed Date</td>
+        <td th:text="${ware.getSerialNumber()}">Serial Number</td>
+        <td th:text="${ware.getWareName()}">Ware Name</td>
+        <td th:text="${ware.getWareType().getId()}">WareType ID</td>
+<!--        <td>-->
+<!--            <a th:href="@{/person(id=${ware.id})}" href="person.html">Просмотреть</a>-->
+<!--        </td>-->
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
