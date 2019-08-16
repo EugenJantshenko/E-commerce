@@ -47,4 +47,15 @@ public class RESTController {
         return dto;
     }
 
+    @PutMapping("/wares/{id}")
+    @ResponseBody
+    public WareDto updateWare(@PathVariable("id") Integer id, @ModelAttribute WareDto wareDto){
+        if(wareHouseService.existsWareById(id)){
+            wareHouseService.updateWare(dtoTransformation.dtoToEntity(wareDto));
+            return dtoTransformation.entityToDto(wareHouseService.updateWare(dtoTransformation.dtoToEntity(wareDto)));
+        } else {
+            log.warn("No ware with id: " +id);
+            return null;
+        }
+    }
 }

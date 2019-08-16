@@ -33,7 +33,7 @@ public class WareHouseServiceImpl implements WarehouseService {
         cart = new HashMap<>();
     }
 
-    public WareType getWareTypeByName(String name){
+    public WareType getWareTypeByName(String name) {
         return wareTypeRepository.findWareTypeByTypeName(name);
     }
 
@@ -50,33 +50,28 @@ public class WareHouseServiceImpl implements WarehouseService {
         }
     }
 
-    @Override
-    public Ware changeWare(Ware ware) {
-        return null;
+    public boolean existsWareById(Integer id) {
+        if (!wareRepository.existsById(id)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
-//    @Transactional
+
 //    @Override
-//    public Ware changeWare(Ware ware) {
+//    public Ware updateWare(Ware ware) {
+//        return null;
+//    }
+
+    @Transactional
+    @Override
+    public Ware updateWare(Ware ware) {
 //        Optional<Ware> byWareName = wareRepository.findByWareName(ware.getWareName());
 //        return byWareName.map((item) -> updateWare(ware, item))
 //                .orElseThrow(() -> new RuntimeException());
-
-
-//        if (wareRepository.existsByWareName(ware.getWareName())) {
-//            int id = wareRepository.findByWareName(ware.getWareName()).getId();
-//            ware.setId(id);
-//            wareRepository.save(ware);
-//            return true;
-//        } else {
-//            log.warn(" Cant find ware with id: " + ware.getId());
-//            return false;
-//        }
-//    }
-
-    private Ware updateWare(Ware ware, Ware entity) {
-        entity.setWareType(ware.getWareType());
-        return entity;
+            wareRepository.save(ware);
+            return ware;
     }
 
     @Transactional
@@ -248,7 +243,7 @@ public class WareHouseServiceImpl implements WarehouseService {
     }
 
 
-    public void filUpTable(){
+    public void filUpTable() {
         createCategory();
         createType();
         createMultipleWares();

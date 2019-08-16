@@ -13,7 +13,7 @@ public interface WarehouseService {
 
     boolean createNewWare(Ware ware);
 
-    Ware changeWare(Ware ware);
+    Ware updateWare(Ware ware);
 
     boolean deleteWare(String name);
 
