@@ -19,7 +19,7 @@ public class Ware implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "ware_name" /*,unique = true*/)
+    @Column(name = "ware_name" ,unique = true)
     private String wareName;
 
     @Column(name = "manufacturer")

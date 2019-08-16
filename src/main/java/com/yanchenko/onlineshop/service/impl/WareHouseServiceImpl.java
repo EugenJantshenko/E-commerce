@@ -8,17 +8,12 @@ import com.yanchenko.onlineshop.repository.WareRepository;
 import com.yanchenko.onlineshop.repository.WareTypeRepository;
 import com.yanchenko.onlineshop.service.WarehouseService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.*;
-
-import static org.apache.logging.log4j.LogManager.*;
 
 @Slf4j
 @Service
@@ -38,6 +33,11 @@ public class WareHouseServiceImpl implements WarehouseService {
         cart = new HashMap<>();
     }
 
+    public WareType getWareTypeByName(String name){
+        return wareTypeRepository.findWareTypeByTypeName(name);
+    }
+
+
     @Transactional
     @Override
     public boolean createNewWare(Ware ware) {
@@ -50,18 +50,33 @@ public class WareHouseServiceImpl implements WarehouseService {
         }
     }
 
-    @Transactional
     @Override
-    public boolean changeWare(Ware ware) {
-        if (wareRepository.existsByWareName(ware.getWareName())) {
-            int id = wareRepository.findByWareName(ware.getWareName()).getId();
-            ware.setId(id);
-            wareRepository.save(ware);
-            return true;
-        } else {
-            log.warn(" Cant find ware with id: " + ware.getId());
-            return false;
-        }
+    public Ware changeWare(Ware ware) {
+        return null;
+    }
+
+//    @Transactional
+//    @Override
+//    public Ware changeWare(Ware ware) {
+//        Optional<Ware> byWareName = wareRepository.findByWareName(ware.getWareName());
+//        return byWareName.map((item) -> updateWare(ware, item))
+//                .orElseThrow(() -> new RuntimeException());
+
+
+//        if (wareRepository.existsByWareName(ware.getWareName())) {
+//            int id = wareRepository.findByWareName(ware.getWareName()).getId();
+//            ware.setId(id);
+//            wareRepository.save(ware);
+//            return true;
+//        } else {
+//            log.warn(" Cant find ware with id: " + ware.getId());
+//            return false;
+//        }
+//    }
+
+    private Ware updateWare(Ware ware, Ware entity) {
+        entity.setWareType(ware.getWareType());
+        return entity;
     }
 
     @Transactional
@@ -71,8 +86,8 @@ public class WareHouseServiceImpl implements WarehouseService {
             log.warn("There is no item in the warehouse with the name: " + name);
             return false;
         }
-        Ware currentWare = wareRepository.findByWareName(name);
-        wareRepository.delete(currentWare);
+        Optional<Ware> currentWare = wareRepository.findByWareName(name);
+        wareRepository.delete(currentWare.get());
         return true;
     }
 
@@ -148,7 +163,7 @@ public class WareHouseServiceImpl implements WarehouseService {
     public void setReceivedDate(Integer wareID, Date receivedDate) {
         Ware currentWare = wareRepository.getWareById(wareID);
         currentWare.setReceivedDate(receivedDate);
-        wareRepository.save(currentWare);
+//        wareRepository.save(currentWare);
     }
 
     @Transactional
@@ -171,27 +186,27 @@ public class WareHouseServiceImpl implements WarehouseService {
         if (!wareRepository.existsByWareName(typeName)) {
             return false;
         }
-        Ware currentWare = wareRepository.findByWareName(typeName);
-        if (currentWare.getWareType().isBlocked()) {
-            currentWare.getWareType().setBlocked(false);
+        Optional<Ware> currentWare = wareRepository.findByWareName(typeName);
+        if (currentWare.get().getWareType().isBlocked()) {
+            currentWare.get().getWareType().setBlocked(false);
         } else {
-            currentWare.getWareType().setBlocked(true);
+            currentWare.get().getWareType().setBlocked(true);
         }
-        wareRepository.save(currentWare);
+        wareRepository.save(currentWare.get());
         return true;
     }
 
     @Override
     public boolean addWareToCart(String name, Integer count) {
-        if (!checkWareOnWarehouse(name, count)) {
-            log.info("Ware not added to cart");
-            return false;
-        }
-        Ware currentWare = wareRepository.findByWareName(name);
-        cart.put(currentWare.getWareName(), count);
-        log.info("Ware added to cart {} {}", name, count);
-        System.out.println("Ware added to cart {} {}" + name + count);
-        System.out.println(cart.size());
+//        if (!checkWareOnWarehouse(name, count)) {
+//            log.info("Ware not added to cart");
+//            return false;
+//        }
+//        Ware currentWare = wareRepository.findByWareName(name);
+//        cart.put(currentWare.getWareName(), count);
+//        log.info("Ware added to cart {} {}", name, count);
+//        System.out.println("Ware added to cart {} {}" + name + count);
+//        System.out.println(cart.size());
         return true;
     }
 
