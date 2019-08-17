@@ -4,10 +4,11 @@ import com.yanchenko.onlineshop.entity.Ware;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface WareRepository extends CrudRepository<Ware, Integer> {
+public interface WareRepository extends CrudRepository<Ware, Long> {
 
-    Ware findByWareName(String name);
+    Optional<Ware> findByWareName(String name);
 
     Ware getWareById(Integer id);
 

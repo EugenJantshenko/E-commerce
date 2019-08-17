@@ -3,7 +3,8 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5Dialect
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
+    generate-ddl: false
 
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -12,11 +13,12 @@ spring:
     password: root
 
 
+
 logging:
   level:
-    org.springframework.web: ERROR
-    com.mkyong: DEBUG
+    org.springframework.web: INFO
+#    org.springframework: debug
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-  file: D:\\SLF4J_logging.log
+  file: SLF4J_logging.log

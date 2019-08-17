@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface WareTypeRepository extends CrudRepository<WareType, Integer> {
+public interface WareTypeRepository extends CrudRepository<WareType, Long> {
     WareType findWareTypeByTypeName(String name);
 
     boolean existsWareTypeByTypeName(String name);

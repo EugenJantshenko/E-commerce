@@ -17,9 +17,9 @@ public class Ware implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column(name = "ware_name" /*,unique = true*/)
+    @Column(name = "ware_name", unique = true)
     private String wareName;
 
     @Column(name = "manufacturer")
@@ -31,6 +31,10 @@ public class Ware implements Serializable {
     @ManyToOne
     @JoinColumn(name = "type_id")
     private WareType wareType;
+
+    @ManyToOne
+    @JoinColumn(name="name_id")
+    private WareCount wareCount;
 
     @Column(name = "price")
     private double price;
