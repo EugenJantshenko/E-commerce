@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class WareDto  implements Serializable {
-    private Integer id;
+    private Long id;
     private String wareName;
     private String manufacturer;
     private String serialNumber;

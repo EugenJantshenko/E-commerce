@@ -17,7 +17,7 @@ public class WareType implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(name = "typeName")
     private String typeName;

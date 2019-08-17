@@ -264,6 +264,11 @@ public class WareHouseServiceImpl implements WarehouseService {
     }
 
     @Transactional
+    void createWareCount(){
+//        List<Ware> wareCount=
+    }
+
+    @Transactional
     void createType() {
         List<WareCategory> wareCategoryList = wareCategoryRepository.findAllByIdIsNotNull();
         for (int i = 1; i <= 20; i++) {

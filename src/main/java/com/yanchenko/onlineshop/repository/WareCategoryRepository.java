@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface WareCategoryRepository extends CrudRepository<WareCategory, Integer> {
+public interface WareCategoryRepository extends CrudRepository<WareCategory, Long> {
     Optional<WareCategory> findById(Integer id);
 
     WareCategory findWareCategoryByCategoryName(String name);
