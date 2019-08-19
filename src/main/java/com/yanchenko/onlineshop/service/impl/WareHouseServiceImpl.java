@@ -6,7 +6,7 @@ import com.yanchenko.onlineshop.entity.WareType;
 import com.yanchenko.onlineshop.repository.WareCategoryRepository;
 import com.yanchenko.onlineshop.repository.WareRepository;
 import com.yanchenko.onlineshop.repository.WareTypeRepository;
-import com.yanchenko.onlineshop.service.WarehouseService;
+import com.yanchenko.onlineshop.service.interfaces.WareHouseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.*;
 @Slf4j
 @Service
 @Transactional(readOnly = true)
-public class WareHouseServiceImpl implements WarehouseService {
+public class WareHouseServiceImpl implements WareHouseService {
 
     private final WareCategoryRepository wareCategoryRepository;
     private final WareRepository wareRepository;
@@ -50,7 +50,7 @@ public class WareHouseServiceImpl implements WarehouseService {
         }
     }
 
-    public boolean existsWareById(Integer id) {
+    public boolean existsWareById(Long id) {
         if (!wareRepository.existsById(id)) {
             return false;
         } else {
@@ -58,15 +58,9 @@ public class WareHouseServiceImpl implements WarehouseService {
         }
     }
 
-
+//    @Transactional
 //    @Override
-//    public Ware updateWare(Ware ware) {
-//        return null;
-//    }
-
-    @Transactional
-    @Override
-    public Ware updateWare(Ware ware) {
+//    public Ware changeWare(Ware ware) {
 //        Optional<Ware> byWareName = wareRepository.findByWareName(ware.getWareName());
 //        return byWareName.map((item) -> updateWare(ware, item))
 //                .orElseThrow(() -> new RuntimeException());

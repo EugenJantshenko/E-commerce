@@ -1,6 +1,5 @@
 package com.yanchenko.onlineshop.controller.examples;
 
-import com.yanchenko.onlineshop.dto.RequestDto;
 import com.yanchenko.onlineshop.entity.Ware;
 import com.yanchenko.onlineshop.repository.WareCategoryRepository;
 import com.yanchenko.onlineshop.repository.WareRepository;
@@ -96,10 +95,9 @@ public class RequestControllerExample {
         return "response from controller ";
     }
 
-    @PostMapping("/products")
-    public void postRequest(@RequestBody RequestDto body) {
-        System.out.println("body: " + body);
-    }
-
+//    @PostMapping("/products")
+//    public void postRequest(@RequestBody RequestDto body) {
+//        System.out.println("body: " + body);
+//    }
 
 }
