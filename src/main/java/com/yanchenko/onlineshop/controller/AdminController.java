@@ -1,7 +1,7 @@
 package com.yanchenko.onlineshop.controller;
 
 import com.yanchenko.onlineshop.dto.WareDto;
-import com.yanchenko.onlineshop.dto.WareTypeForm;
+import com.yanchenko.onlineshop.form.WareTypeForm;
 import com.yanchenko.onlineshop.entity.Ware;
 import com.yanchenko.onlineshop.entity.WareCategory;
 import com.yanchenko.onlineshop.entity.WareType;

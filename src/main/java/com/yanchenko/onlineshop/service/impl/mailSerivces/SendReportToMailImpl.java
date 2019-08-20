@@ -1,11 +1,13 @@
-package com.yanchenko.onlineshop.service.impl;
+package com.yanchenko.onlineshop.service.impl.mailSerivces;
+
+import com.yanchenko.onlineshop.service.interfaces.mailSerivces.SendReportToMail;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-public class SendReportToMail {
+public class SendReportToMailImpl implements SendReportToMail {
 
     public void SendEmail(String textmessage) {
         final String username = "dreamerwalker@gmail.com";

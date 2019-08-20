@@ -8,22 +8,17 @@ import java.util.Optional;
 
 public interface WareRepository extends CrudRepository<Ware, Long> {
 
-    Optional<Ware> findByWareName(String name);
+    Optional<Ware> getByWareName(String name);
 
-    Ware getWareById(Integer id);
+    Ware getWareById(Long id);
 
     boolean existsByWareName(String name);
 
-    boolean existsById(Integer id);
+    boolean existsById(Long id);
 
     boolean existsByManufacturer(String manufacturer);
 
-    List<Ware> findAllByIdIsNotNull();
-
     List<Ware> findAllByManufacturer(String manufacturer);
 
-    boolean deleteWareById(Integer id);
-
-    boolean deleteWareByWareName(String name);
-
+    boolean deleteByWareName(String name);
 }

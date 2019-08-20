@@ -33,7 +33,7 @@ public class RequestControllerExample {
     public boolean createWare() {
         Ware newWare = new Ware();
         newWare.setWareName("TestWare2");
-        newWare.setWareType(wareTypeRepository.findWareTypeById(1));
+        newWare.setWareType(wareTypeRepository.findById(1));
         newWare.setReceivedDate(java.sql.Date.valueOf(LocalDate.now()));
         newWare.setSerialNumber("serial test");
         newWare.setPrice(255);

@@ -1,18 +1,14 @@
 package com.yanchenko.onlineshop.scheduled;
 
 import com.yanchenko.onlineshop.entity.Ware;
-import com.yanchenko.onlineshop.entity.WareType;
 import com.yanchenko.onlineshop.repository.WareRepository;
-import com.yanchenko.onlineshop.service.impl.SendReportToMail;
+import com.yanchenko.onlineshop.service.impl.mailSerivces.SendReportToMailImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Component
 public class Worker {
@@ -22,7 +18,7 @@ public class Worker {
 
     @Scheduled(fixedRate = 15000)
     public void checkWareLeft() {
-        SendReportToMail mailsender = new SendReportToMail();
+        SendReportToMailImpl mailsender = new SendReportToMailImpl();
         Iterable<Ware> all = wareRepository.findAll();
         List<Ware> less10 = new ArrayList<>();
         all.forEach(item -> {

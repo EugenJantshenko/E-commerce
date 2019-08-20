@@ -3,14 +3,11 @@ package com.yanchenko.onlineshop.repository;
 import com.yanchenko.onlineshop.entity.WareType;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
 public interface WareTypeRepository extends CrudRepository<WareType, Long> {
-    WareType findWareTypeByTypeName(String name);
+    WareType findByTypeName(String name);
 
-    boolean existsWareTypeByTypeName(String name);
+    WareType findById(Integer id);
 
-    WareType findWareTypeById(Integer id);
+    boolean existsByTypeName(String name);
 
-    List<WareType> findAllByIdIsNotNull();
 }
