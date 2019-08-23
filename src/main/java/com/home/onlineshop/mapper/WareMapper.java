@@ -5,11 +5,12 @@ import com.home.onlineshop.dto.WareDto;
 import com.home.onlineshop.entity.Ware;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(uses = {WareTypeMapper.class, WareCountMapper.class}, componentModel = "spring")
 public interface WareMapper {
 
-//    WareMapper INSTANCE = Mappers.getMapper(WareMapper.class);
+    WareMapper INSTANCE = Mappers.getMapper(WareMapper.class);
 
     //
 //    @Mappings({

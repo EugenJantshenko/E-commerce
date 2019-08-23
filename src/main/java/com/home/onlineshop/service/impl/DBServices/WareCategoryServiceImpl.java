@@ -1,6 +1,7 @@
 package com.home.onlineshop.service.impl.DBServices;
 
 import com.home.onlineshop.dto.WareCategoryDto;
+import com.home.onlineshop.mapper.WareCategoryMapper;
 import com.home.onlineshop.repository.WareCategoryRepository;
 import com.home.onlineshop.service.interfaces.DBServices.WareCategoryService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +25,11 @@ public class WareCategoryServiceImpl implements WareCategoryService {
 
     @Override
     @Transactional
-    public WareCategoryDto create(String wareCategory) {
-        wareCategoryRepository.save()
-
-        return null;
+    public WareCategoryDto create(String wareCategoryName) {
+        WareCategoryDto newDto= new WareCategoryDto();
+        newDto.setCategoryName(wareCategoryName);
+        wareCategoryRepository.save(WareCategoryMapper.INSTANCE.dtoToCategory(newDto));
+        return WareCategoryMapper.INSTANCE.categoryToDto(wareCategoryRepository.findByCategoryName(wareCategoryName));
     }
 
     @Override
