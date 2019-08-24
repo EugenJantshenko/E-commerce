@@ -1,9 +1,12 @@
 package com.home.onlineshop.service.impl.DBServices;
 
 import com.home.onlineshop.dto.WareDto;
+import com.home.onlineshop.entity.Ware;
+import com.home.onlineshop.mapper.WareMapper;
 import com.home.onlineshop.repository.WareRepository;
 import com.home.onlineshop.service.interfaces.DBServices.WareService;
 import lombok.extern.slf4j.Slf4j;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +19,7 @@ import java.util.List;
 public class WareServiceImpl implements WareService {
 
     private final WareRepository wareRepository;
+    private static WareMapper wareMapper = Mappers.getMapper(WareMapper.class);
 
     @Autowired
     public WareServiceImpl(WareRepository wareRepository) {
@@ -25,7 +29,8 @@ public class WareServiceImpl implements WareService {
     @Transactional
     @Override
     public WareDto create(WareDto wareDto) {
-        return null;
+        wareRepository.save(wareMapper.wareDtoToWare(wareDto));
+        return wareMapper.wareToWareDto(wareRepository.getWareBySerialNumber(wareDto.getSerialNumber()));
     }
 
     @Transactional
@@ -42,11 +47,11 @@ public class WareServiceImpl implements WareService {
 
     @Override
     public Iterable<WareDto> getAll() {
-        return null;
+        return wareMapper.wareToDtoList((List<Ware>) wareRepository.findAll());
     }
 
     @Override
-    public List<WareDto> getByManufacturer(String manufacturer) {
+    public List<WareDto> getAllByManufacturer(String manufacturer) {
         return null;
     }
 

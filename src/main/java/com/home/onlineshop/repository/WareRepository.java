@@ -12,6 +12,8 @@ public interface WareRepository extends CrudRepository<Ware, Long> {
 
     Ware getWareById(Long id);
 
+    Ware getWareBySerialNumber(String serial);
+
     boolean existsByWareName(String name);
 
     boolean existsById(Long id);

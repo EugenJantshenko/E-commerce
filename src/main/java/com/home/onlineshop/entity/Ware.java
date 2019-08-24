@@ -1,9 +1,23 @@
 package com.home.onlineshop.entity;
 
-import lombok.*;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -19,7 +33,7 @@ public class Ware implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ware_name", unique = true)
+    @Column(name = "ware_name")
     private String wareName;
 
     @Column(name = "manufacturer")
@@ -40,10 +54,10 @@ public class Ware implements Serializable {
     private double price;
 
     @Basic
-    private java.sql.Date receivedDate;
+    private LocalDateTime receivedDate;
 
     @Basic
-    private java.sql.Date sealedDate;
+    private LocalDateTime sealedDate;
 
     @Column(name = "sealed", columnDefinition = "int default 0")
     private boolean isSealed;

@@ -14,7 +14,7 @@ public interface WareService {
 
     Iterable<WareDto> getAll();
 
-    List<WareDto> getByManufacturer(String manufacturer);
+    List<WareDto> getAllByManufacturer(String manufacturer);
 
     boolean existsById(Long id);
 }

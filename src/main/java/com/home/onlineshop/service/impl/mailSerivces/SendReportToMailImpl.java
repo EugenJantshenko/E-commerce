@@ -1,12 +1,14 @@
 package com.home.onlineshop.service.impl.mailSerivces;
 
 import com.home.onlineshop.service.interfaces.mailSerivces.SendReportToMail;
+import org.springframework.stereotype.Service;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+@Service
 public class SendReportToMailImpl implements SendReportToMail {
 
     public void SendEmail(String textmessage) {

@@ -1,29 +1,30 @@
 package com.home.onlineshop.scheduled;
 
-import com.home.onlineshop.entity.Ware;
 import com.home.onlineshop.repository.WareRepository;
-import com.home.onlineshop.service.impl.mailSerivces.SendReportToMailImpl;
+import com.home.onlineshop.service.interfaces.mailSerivces.SendReportToMail;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class Worker {
 
-    @Autowired
-    private WareRepository wareRepository;
 
-    @Scheduled(fixedRate = 15000)
-    public void checkWareLeft() {
-        SendReportToMailImpl mailsender = new SendReportToMailImpl();
-        Iterable<Ware> all = wareRepository.findAll();
-        List<Ware> less10 = new ArrayList<>();
-        all.forEach(item -> {
+    private final WareRepository wareRepository;
+    private final SendReportToMail sendReportToMail;
+
+    @Autowired
+    public Worker(WareRepository wareRepository, SendReportToMail sendReportToMail) {
+        this.wareRepository = wareRepository;
+        this.sendReportToMail = sendReportToMail;
+    }
+
+//    @Scheduled(fixedRate = 15000)
+//    public void checkWareLeft() {
+//        Iterable<Ware> all = wareRepository.findAll();
+//        List<Ware> leftovers = new ArrayList<>();
+//        all.forEach(item -> {
 //            if (item.getCount() <=10) {
-//                less10.add(item);
+//                leftovers.add(item);
 //            }
 //        });
 //        List<WareType> wares = StreamSupport.stream(all.spliterator(), false)
@@ -36,12 +37,9 @@ public class Worker {
 //            //log.info(item.getWareName()+" is less"+" "+item.getCount());
 //            mailMessage.append(item.getWareName()).append(" less").append(item.getCount()).append(" units. \n");
 //        }
-//        mailsender.SendEmail(mailMessage.toString());
+//        sendReportToMail.SendEmail(mailMessage.toString());
 //        System.out.println(wareRepository.count());
 //
 //        log.info("The time is now {}", dateFormat.format(new Date()));
 //    }
-//}
-        });
-    }
 }

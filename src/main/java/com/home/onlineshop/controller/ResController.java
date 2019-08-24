@@ -2,23 +2,19 @@ package com.home.onlineshop.controller;
 
 import com.home.onlineshop.dto.WareCategoryDto;
 import com.home.onlineshop.dto.WareDto;
-import com.home.onlineshop.entity.Ware;
-import com.home.onlineshop.mapper.WareMapper;
-import com.home.onlineshop.repository.WareCategoryRepository;
-import com.home.onlineshop.repository.WareRepository;
-import com.home.onlineshop.service.DtoTransformation;
+import com.home.onlineshop.dto.WareTypeDto;
 import com.home.onlineshop.service.interfaces.DBServices.WareCategoryService;
-import com.home.onlineshop.service.interfaces.WareHouseService;
+import com.home.onlineshop.service.interfaces.DBServices.WareService;
+import com.home.onlineshop.service.interfaces.DBServices.WareTypeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -26,36 +22,39 @@ import java.util.List;
 @RequestMapping("/rest")
 public class ResController {
 
-    private final WareRepository wareRepository;
-    private final DtoTransformation dtoTransformation;
-    private final WareHouseService wareHouseService;
     private final WareCategoryService wareCategoryService;
+    private final WareTypeService wareTypeService;
+    private final WareService wareService;
 
     @Autowired
-    public ResController(WareRepository wareRepository, DtoTransformation dtoTransformation, WareHouseService wareHouseService, WareCategoryRepository wareCategoryRepository, WareCategoryService wareCategoryService) {
-        this.wareRepository = wareRepository;
-        this.dtoTransformation = dtoTransformation;
-        this.wareHouseService = wareHouseService;
+    public ResController(WareCategoryService wareCategoryService, WareTypeService wareTypeService, WareService wareService) {
         this.wareCategoryService = wareCategoryService;
+        this.wareTypeService = wareTypeService;
+        this.wareService = wareService;
     }
 
     @GetMapping("/wares")
     public List<WareDto> getAllWares() {
-        Iterable<Ware> wares = wareRepository.findAll();
-        List<WareDto> dto = new ArrayList<>();
-        for (Ware ware : wares) {
-            dto.add(WareMapper.INSTANCE.wareToWareDto(ware));
-        }
-        return dto;
+        return (List<WareDto>) wareService.getAll();
     }
 
-    @PostMapping("/wareCategory")
+    @PostMapping("/create-category")
     @ResponseBody
-    public WareCategoryDto createWare(@ModelAttribute WareCategoryDto wareCategoryDto) {
-
+    public WareCategoryDto createCategory(@RequestBody WareCategoryDto wareCategoryDto) {
      return wareCategoryService.create(wareCategoryDto.getCategoryName());
     }
 
+    @PostMapping("/create-type")
+    @ResponseBody
+    public WareTypeDto createType(@RequestBody WareTypeDto wareTypeDto){
+        return wareTypeService.create(wareTypeDto.getTypeName(),wareTypeDto.getWareCategory().getId());
+    }
+
+    @PostMapping("/create-ware")
+    @ResponseBody
+    public WareDto createWare (@RequestBody WareDto wareDto){
+        return wareService.create(wareDto);
+    }
 
 //    @PostMapping("/wares")
 //    @ResponseBody

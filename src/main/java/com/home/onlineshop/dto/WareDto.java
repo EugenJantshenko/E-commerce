@@ -3,11 +3,11 @@ package com.home.onlineshop.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class WareDto  implements Serializable {
+public class WareDto {
     private Long id;
     private String wareName;
     private String manufacturer;
@@ -15,7 +15,7 @@ public class WareDto  implements Serializable {
     private WareTypeDto wareType;
     private WareCountDto wareCount;
     private Double price;
-    private java.sql.Date receivedDate;
-    private java.sql.Date sealedDate;
+    private LocalDateTime receivedDate;
+    private LocalDateTime sealedDate;
     private Boolean isSealed;
 }
