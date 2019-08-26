@@ -4,7 +4,7 @@ import com.home.onlineshop.service.interfaces.DBServices.WareCategoryService;
 import com.home.onlineshop.service.interfaces.DBServices.WareCountService;
 import com.home.onlineshop.service.interfaces.DBServices.WareService;
 import com.home.onlineshop.service.interfaces.DBServices.WareTypeService;
-import com.home.onlineshop.service.interfaces.WareHouseService;
+import com.home.onlineshop.service.interfaces.CustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 
-public class WareHouseServiceImpl implements WareHouseService {
+public class CustomerServiceImpl implements CustomerService {
 
     private final WareService wareService;
     private final WareCountService wareCountService;
@@ -20,7 +20,7 @@ public class WareHouseServiceImpl implements WareHouseService {
     private final WareCategoryService wareCategoryService;
 
     @Autowired
-    public WareHouseServiceImpl(WareService wareService, WareCountService wareCountService, WareTypeService wareTypeService, WareCategoryService wareCategoryService){
+    public CustomerServiceImpl(WareService wareService, WareCountService wareCountService, WareTypeService wareTypeService, WareCategoryService wareCategoryService){
         this.wareService=wareService;
         this.wareCountService = wareCountService;
         this.wareTypeService = wareTypeService;

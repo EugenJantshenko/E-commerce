@@ -22,7 +22,3 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /.idea/
-!/src/main/java/com/home/hibernate/crud/operations/scheduled/Worker.java
-/src/main/java/com/home/onlineshop/controller/examples/AdminController.java
-/src/main/java/com/home/onlineshop/controller/examples/CalcController.java
-/src/main/java/com/home/onlineshop/controller/examples/RequestControllerExample.java
