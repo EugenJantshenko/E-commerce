@@ -36,13 +36,20 @@ public class WareServiceImpl implements WareService {
     @Transactional
     @Override
     public WareDto update(WareDto dto) {
-        return null;
+        wareRepository.save(wareMapper.wareDtoToWare(dto));
+        return wareMapper.wareToWareDto(wareRepository.getWareById(dto.getId()));
     }
 
     @Transactional
     @Override
     public boolean delete(Long id) {
-        return true;
+        if (id != null) {
+            if (existsById(id)) {
+                wareRepository.deleteById(id);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -52,7 +59,7 @@ public class WareServiceImpl implements WareService {
 
     @Override
     public List<WareDto> getAllByManufacturer(String manufacturer) {
-        return null;
+        return wareMapper.wareToDtoList(wareRepository.findAllByManufacturer(manufacturer));
     }
 
     @Override

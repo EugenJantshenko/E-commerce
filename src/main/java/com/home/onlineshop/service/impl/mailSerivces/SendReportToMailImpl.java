@@ -1,43 +1,29 @@
 package com.home.onlineshop.service.impl.mailSerivces;
 
 import com.home.onlineshop.service.interfaces.mailSerivces.SendReportToMail;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.Properties;
 
 @Service
 public class SendReportToMailImpl implements SendReportToMail {
 
-    public void SendEmail(String textmessage) {
-        final String username = "dreamerwalker@gmail.com";
-        final String password = "";
+    @Autowired
+    private JavaMailSender sender;
 
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+    @Override
+    public void SendEmail(String to, String subject, String text) throws Exception {
 
-        Session session = Session.getInstance(props,
-                new Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("from-email@gmail.com"));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("dreamerwalker@gmail.com"));
-            message.setSubject("Shop Subject");
-            //message.setText("Dear Mail Crawler,\n\n No spam to my email, please!");
-            message.setText(textmessage);
-            Transport.send(message);
-            System.out.println("Done");
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+        MimeMessage message = sender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message,true);
+        helper.setTo(to);
+        helper.setText(text);
+        helper.setSubject(subject);
+
+        sender.send(message);
     }
+
 }

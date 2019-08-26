@@ -1,4 +1,4 @@
-package com.home.onlineshop.scheduled;
+package com.home.onlineshop.examples;
 
 import com.home.onlineshop.repository.WareRepository;
 import com.home.onlineshop.service.interfaces.mailSerivces.SendReportToMail;
@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Worker {
+public class SheduledExample {
 
 
     private final WareRepository wareRepository;
     private final SendReportToMail sendReportToMail;
 
     @Autowired
-    public Worker(WareRepository wareRepository, SendReportToMail sendReportToMail) {
+    public SheduledExample(WareRepository wareRepository, SendReportToMail sendReportToMail) {
         this.wareRepository = wareRepository;
         this.sendReportToMail = sendReportToMail;
     }
