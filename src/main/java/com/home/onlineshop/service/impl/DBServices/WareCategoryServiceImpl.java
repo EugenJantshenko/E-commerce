@@ -1,6 +1,7 @@
 package com.home.onlineshop.service.impl.DBServices;
 
 import com.home.onlineshop.dto.WareCategoryDto;
+import com.home.onlineshop.entity.WareCategory;
 import com.home.onlineshop.mapper.WareCategoryMapper;
 import com.home.onlineshop.repository.WareCategoryRepository;
 import com.home.onlineshop.service.interfaces.DBServices.WareCategoryService;
@@ -9,8 +10,6 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -34,7 +33,7 @@ public class WareCategoryServiceImpl implements WareCategoryService {
     }
 
     @Override
-    public List<WareCategoryDto> getAll() {
-        return null;
+    public Iterable<WareCategory> getAll() {
+        return wareCategoryRepository.findAll();
     }
 }

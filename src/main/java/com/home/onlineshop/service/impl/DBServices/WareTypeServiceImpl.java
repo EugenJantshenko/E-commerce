@@ -1,6 +1,7 @@
 package com.home.onlineshop.service.impl.DBServices;
 
 import com.home.onlineshop.dto.WareTypeDto;
+import com.home.onlineshop.entity.WareType;
 import com.home.onlineshop.mapper.WareCategoryMapper;
 import com.home.onlineshop.mapper.WareTypeMapper;
 import com.home.onlineshop.repository.WareCategoryRepository;
@@ -40,19 +41,27 @@ public class WareTypeServiceImpl implements WareTypeService {
     }
 
     @Override
-    public Iterable<WareTypeDto> getAll() {
-        return null;
+    public Iterable<WareType> getAll() {
+        return wareTypeRepository.findAll();
     }
 
     @Override
     public boolean block(String typeName) {
-        return false;
+        if (!wareTypeRepository.findByTypeName(typeName).isBlocked()) {
+            wareTypeRepository.findByTypeName(typeName).setBlocked(true);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean unblock(String typeName) {
-        return false;
+        if (wareTypeRepository.findByTypeName(typeName).isBlocked()) {
+            wareTypeRepository.findByTypeName(typeName).setBlocked(false);
+            return true;
+        } else {
+            return false;
+        }
     }
-
-
 }

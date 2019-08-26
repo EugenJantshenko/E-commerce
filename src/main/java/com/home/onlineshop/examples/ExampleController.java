@@ -1,14 +1,14 @@
 //package com.yanchenko.onlineshop.controller;
 //
+//import com.home.onlineshop.repository.WareCategoryRepository;
+//import com.home.onlineshop.repository.WareRepository;
+//import com.home.onlineshop.repository.WareTypeRepository;
+//import com.home.onlineshop.service.impl.WareHouseServiceImpl;
 //import com.yanchenko.onlineshop.dto.WareDto;
-//import com.yanchenko.onlineshop.form.WareTypeForm;
 //import com.yanchenko.onlineshop.entity.Ware;
 //import com.yanchenko.onlineshop.entity.WareCategory;
 //import com.yanchenko.onlineshop.entity.WareType;
-//import com.yanchenko.onlineshop.repository.WareCategoryRepository;
-//import com.yanchenko.onlineshop.repository.WareRepository;
-//import com.yanchenko.onlineshop.repository.WareTypeRepository;
-//import com.yanchenko.onlineshop.service.impl.WareHouseServiceImpl;
+//import com.yanchenko.onlineshop.form.WareTypeForm;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;
@@ -32,11 +32,11 @@
 //    private final WareHouseServiceImpl wareHouseService;
 //
 //    @Autowired
-//    public AdminController(WareRepository wareRepository, WareCategoryRepository wareCategoryRepository, WareTypeRepository wareTypeRepository) {
+//    public AdminController(WareRepository wareRepository, WareCategoryRepository wareCategoryRepository, WareTypeRepository wareTypeRepository, WareHouseServiceImpl wareHouseService) {
 //        this.wareRepository = wareRepository;
 //        this.wareCategoryRepository = wareCategoryRepository;
 //        this.wareTypeRepository = wareTypeRepository;
-////        wareHouseService = new WareHouseServiceImpl(wareRepository, wareCategoryRepository, wareTypeRepository);
+//        this.wareHouseService = wareHouseService;
 //    }
 //
 //    @GetMapping("/wares")
@@ -85,8 +85,4 @@
 //        return "ware";
 //    }
 //
-//    @GetMapping("/fillUp")
-//    public void fillUpTable(){
-//        wareHouseService.filUpTable();
-//    }
 //}
