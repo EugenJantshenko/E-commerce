@@ -1,13 +1,12 @@
 package com.home.onlineshop.service.interfaces.DBServices;
 
 import com.home.onlineshop.dto.WareTypeDto;
-import com.home.onlineshop.entity.WareType;
 
 public interface WareTypeService {
 
     WareTypeDto create(String wareType, Long category);
 
-    Iterable<WareType> getAll();
+    Iterable<WareTypeDto> getAll();
 
     public boolean block(String typeName);
 

@@ -5,8 +5,6 @@ import com.home.onlineshop.dto.WareDto;
 import com.home.onlineshop.entity.Ware;
 import org.mapstruct.Mapper;
 
-import java.util.List;
-
 @Mapper(uses = {WareTypeMapper.class, WareCountMapper.class})
 public interface WareMapper {
 
@@ -14,5 +12,5 @@ public interface WareMapper {
 
     WareDto wareToWareDto(Ware ware);
 
-    List<WareDto> wareToDtoList(List<Ware> wareList);
+    Iterable<WareDto> wareToDtoList(Iterable<Ware> wareList);
 }

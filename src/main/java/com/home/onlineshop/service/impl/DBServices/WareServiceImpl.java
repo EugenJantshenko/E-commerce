@@ -1,7 +1,6 @@
 package com.home.onlineshop.service.impl.DBServices;
 
 import com.home.onlineshop.dto.WareDto;
-import com.home.onlineshop.entity.Ware;
 import com.home.onlineshop.mapper.WareMapper;
 import com.home.onlineshop.repository.WareRepository;
 import com.home.onlineshop.service.interfaces.DBServices.WareService;
@@ -11,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Slf4j
 @Service
@@ -29,6 +28,7 @@ public class WareServiceImpl implements WareService {
     @Transactional
     @Override
     public WareDto create(WareDto wareDto) {
+        wareDto.setReceivedDate(LocalDateTime.now());
         wareRepository.save(wareMapper.wareDtoToWare(wareDto));
         return wareMapper.wareToWareDto(wareRepository.getWareBySerialNumber(wareDto.getSerialNumber()));
     }
@@ -36,6 +36,7 @@ public class WareServiceImpl implements WareService {
     @Transactional
     @Override
     public WareDto update(WareDto dto) {
+
         wareRepository.save(wareMapper.wareDtoToWare(dto));
         return wareMapper.wareToWareDto(wareRepository.getWareById(dto.getId()));
     }
@@ -54,11 +55,11 @@ public class WareServiceImpl implements WareService {
 
     @Override
     public Iterable<WareDto> getAll() {
-        return wareMapper.wareToDtoList((List<Ware>) wareRepository.findAll());
+        return wareMapper.wareToDtoList(wareRepository.findAll());
     }
 
     @Override
-    public List<WareDto> getAllByManufacturer(String manufacturer) {
+    public Iterable<WareDto> getAllByManufacturer(String manufacturer) {
         return wareMapper.wareToDtoList(wareRepository.findAllByManufacturer(manufacturer));
     }
 

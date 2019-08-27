@@ -41,9 +41,19 @@ public class ResController {
         sendReportToMail.SendEmail("kryoengineer@gmail.com","Test Mail", "Это провреочное писмо по состянию товара на складе");
     }
 
-    @GetMapping("/wares")
+    @GetMapping("/allWares")
     public Iterable<WareDto> getAllWares() {
         return wareService.getAll();
+    }
+
+    @GetMapping("/allTypes")
+    public Iterable<WareTypeDto> getAllTypes() {
+        return wareTypeService.getAll();
+    }
+
+    @GetMapping("/allCategories")
+    public Iterable<WareCategoryDto> getAllCategory() {
+        return wareCategoryService.getAll();
     }
 
     @PostMapping("/create-category")

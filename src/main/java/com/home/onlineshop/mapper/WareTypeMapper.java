@@ -8,5 +8,8 @@ import org.mapstruct.Mapper;
 public interface WareTypeMapper {
 
     WareTypeDto wareTypeToWareTypeDto(WareType wareType);
+
     WareType wareTypeDtoToWareType(WareTypeDto wareTypeDto);
+
+    Iterable<WareTypeDto> wareTypeToDtoList(Iterable<WareType> typeList);
 }

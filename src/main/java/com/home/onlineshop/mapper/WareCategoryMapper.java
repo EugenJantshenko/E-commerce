@@ -10,4 +10,6 @@ public interface WareCategoryMapper {
     WareCategory dtoToCategory(WareCategoryDto dto);
 
     WareCategoryDto categoryToDto(WareCategory cat);
+
+    Iterable<WareCategoryDto> wareCategoryToDto(Iterable<WareCategory> categories);
 }

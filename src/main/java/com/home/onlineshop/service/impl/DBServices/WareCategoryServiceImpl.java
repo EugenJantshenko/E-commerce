@@ -1,7 +1,6 @@
 package com.home.onlineshop.service.impl.DBServices;
 
 import com.home.onlineshop.dto.WareCategoryDto;
-import com.home.onlineshop.entity.WareCategory;
 import com.home.onlineshop.mapper.WareCategoryMapper;
 import com.home.onlineshop.repository.WareCategoryRepository;
 import com.home.onlineshop.service.interfaces.DBServices.WareCategoryService;
@@ -33,7 +32,7 @@ public class WareCategoryServiceImpl implements WareCategoryService {
     }
 
     @Override
-    public Iterable<WareCategory> getAll() {
-        return wareCategoryRepository.findAll();
+    public Iterable<WareCategoryDto> getAll() {
+        return wareCategoryMapper.wareCategoryToDto(wareCategoryRepository.findAll());
     }
 }
