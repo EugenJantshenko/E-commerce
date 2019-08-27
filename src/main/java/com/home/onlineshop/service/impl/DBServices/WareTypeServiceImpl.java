@@ -63,4 +63,14 @@ public class WareTypeServiceImpl implements WareTypeService {
             return false;
         }
     }
+
+    @Override
+    @Transactional
+    public boolean delete(Long id) {
+        if(wareTypeRepository.existsById(id)){
+            wareTypeRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }

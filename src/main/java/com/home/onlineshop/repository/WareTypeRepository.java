@@ -11,4 +11,5 @@ public interface WareTypeRepository extends CrudRepository<WareType, Long> {
     Optional<WareType> findById(Long id);
 
     boolean existsByTypeName(String name);
+
 }

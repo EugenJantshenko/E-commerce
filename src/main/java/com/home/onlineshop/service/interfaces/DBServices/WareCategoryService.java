@@ -7,4 +7,6 @@ public interface WareCategoryService {
     WareCategoryDto create(String wareCategory);
 
     Iterable<WareCategoryDto> getAll();
+
+    boolean delete (Long id);
 }

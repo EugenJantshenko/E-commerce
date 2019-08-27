@@ -8,8 +8,10 @@ public interface WareTypeService {
 
     Iterable<WareTypeDto> getAll();
 
-    public boolean block(String typeName);
+    boolean block(String typeName);
 
-    public boolean unblock(String typeName);
+    boolean unblock(String typeName);
+
+    boolean delete(Long id);
 
 }

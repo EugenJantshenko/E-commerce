@@ -35,4 +35,14 @@ public class WareCategoryServiceImpl implements WareCategoryService {
     public Iterable<WareCategoryDto> getAll() {
         return wareCategoryMapper.wareCategoryToDto(wareCategoryRepository.findAll());
     }
+
+    @Override
+    @Transactional
+    public boolean delete(Long id) {
+        if(wareCategoryRepository.existsById(id)){
+            wareCategoryRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }

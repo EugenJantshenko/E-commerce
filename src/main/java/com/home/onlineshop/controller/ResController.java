@@ -85,4 +85,19 @@ public class ResController {
             return null;
         }
     }
+
+    @GetMapping("/delete-ware/{id}")
+    public boolean deleteWare(@PathVariable("id") Long id){
+        return wareService.delete(id);
+    }
+
+    @GetMapping("/delete-type/{id}")
+    public boolean deleteType(@PathVariable("id") Long id){
+        return wareTypeService.delete(id);
+    }
+
+    @GetMapping("/delete-category/{id}")
+    public boolean deleteCategory(@PathVariable("id") Long id){
+        return wareCategoryService.delete(id);
+    }
 }

@@ -36,6 +36,8 @@ public class WareServiceImpl implements WareService {
     @Transactional
     @Override
     public WareDto update(WareDto dto) {
+        WareDto currentWareDto = wareMapper.wareToWareDto(wareRepository.getWareById(dto.getId()));
+
 
         wareRepository.save(wareMapper.wareDtoToWare(dto));
         return wareMapper.wareToWareDto(wareRepository.getWareById(dto.getId()));
