@@ -1,18 +1,21 @@
 package com.home.onlineshop.service.impl.DBServices;
 
 import com.home.onlineshop.dto.WareDto;
+import com.home.onlineshop.entity.Ware;
+import com.home.onlineshop.exceptions.ThereIsNoSuchWareException;
+import com.home.onlineshop.exceptions.WareResourceNotFoundException;
 import com.home.onlineshop.mapper.WareMapper;
 import com.home.onlineshop.repository.WareRepository;
 import com.home.onlineshop.service.interfaces.DBServices.WareService;
-import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
-@Slf4j
 @Service
 @Transactional(readOnly = true)
 public class WareServiceImpl implements WareService {
@@ -28,45 +31,47 @@ public class WareServiceImpl implements WareService {
     @Transactional
     @Override
     public WareDto create(WareDto wareDto) {
-        wareDto.setReceivedDate(LocalDateTime.now());
-        wareRepository.save(wareMapper.wareDtoToWare(wareDto));
-        return wareMapper.wareToWareDto(wareRepository.getWareBySerialNumber(wareDto.getSerialNumber()));
+        if(!wareRepository.existsBySerialNumber(wareDto.getSerialNumber())) {
+            wareDto.setReceivedDate(LocalDateTime.now());
+            return wareMapper.entityToDto(wareRepository.save(wareMapper.dtoToEntity(wareDto)));
+        }
+        throw new WareResourceNotFoundException("SerialNumber is already exist");
     }
 
+    // В процессе реализации
     @Transactional
     @Override
     public WareDto update(WareDto dto) {
-        WareDto currentWareDto = wareMapper.wareToWareDto(wareRepository.getWareById(dto.getId()));
-
-
-        wareRepository.save(wareMapper.wareDtoToWare(dto));
-        return wareMapper.wareToWareDto(wareRepository.getWareById(dto.getId()));
-    }
-
-    @Transactional
-    @Override
-    public boolean delete(Long id) {
-        if (id != null) {
-            if (existsById(id)) {
-                wareRepository.deleteById(id);
-                return true;
-            }
-        }
-        return false;
+        WareDto currentWareDto = wareMapper.entityToDto(wareRepository.getWareById(dto.getId()));
+        wareRepository.save(wareMapper.dtoToEntity(dto));
+        return wareMapper.entityToDto(wareRepository.getWareById(dto.getId()));
     }
 
     @Override
     public Iterable<WareDto> getAll() {
-        return wareMapper.wareToDtoList(wareRepository.findAll());
+        return StreamSupport.stream(wareRepository.findAll().spliterator(),false)
+                .map(wareMapper::entityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Iterable<WareDto> getAllByManufacturer(String manufacturer) {
-        return wareMapper.wareToDtoList(wareRepository.findAllByManufacturer(manufacturer));
+        return StreamSupport.stream(wareRepository.findAllByManufacturer(manufacturer).spliterator(),false)
+                .map(wareMapper::entityToDto)
+                .collect(Collectors.toList());
+
+//        return wareMapper.wareToDtoList(wareRepository.findAllByManufacturer(manufacturer));
     }
 
     @Override
     public boolean existsById(Long id) {
         return wareRepository.existsById(id);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        Ware ware = wareRepository.findById(id).orElseThrow(ThereIsNoSuchWareException::new);
+        wareRepository.delete(ware);
     }
 }

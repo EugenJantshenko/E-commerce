@@ -8,7 +8,7 @@ public interface WareService {
 
     WareDto update(WareDto wareDto);
 
-    boolean delete(Long id);
+    void delete(Long id);
 
     Iterable<WareDto> getAll();
 

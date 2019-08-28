@@ -8,9 +8,8 @@ import org.mapstruct.Mapper;
 @Mapper(uses = {WareTypeMapper.class, WareCountMapper.class})
 public interface WareMapper {
 
-    Ware wareDtoToWare(WareDto dto);
+    Ware dtoToEntity(WareDto dto);
 
-    WareDto wareToWareDto(Ware ware);
+    WareDto entityToDto(Ware ware);
 
-    Iterable<WareDto> wareToDtoList(Iterable<Ware> wareList);
 }

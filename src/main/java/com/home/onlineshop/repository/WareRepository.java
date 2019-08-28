@@ -22,4 +22,6 @@ public interface WareRepository extends CrudRepository<Ware, Long> {
     Iterable<Ware> findAllByManufacturer(String manufacturer);
 
     boolean deleteByWareName(String name);
+
+    boolean existsBySerialNumber(String serialNumber);
 }

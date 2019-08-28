@@ -8,5 +8,5 @@ public interface WareCategoryService {
 
     Iterable<WareCategoryDto> getAll();
 
-    boolean delete (Long id);
+    void delete (Long id);
 }

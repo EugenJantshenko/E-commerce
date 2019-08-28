@@ -6,6 +6,6 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface WareCountMapper {
-    WareCountDto wareCountToWareCountDto(WareCount wareCount);
-    WareCount wareCountDtoToWareCount(WareCountDto wareCountDto);
+    WareCountDto entityToDto(WareCount wareCount);
+    WareCount dtoToEntity(WareCountDto wareCountDto);
 }
