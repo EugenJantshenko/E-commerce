@@ -2,7 +2,7 @@ package com.home.onlineshop.service.impl.DBServices;
 
 import com.home.onlineshop.dto.WareDto;
 import com.home.onlineshop.entity.Ware;
-import com.home.onlineshop.exceptions.ThereIsNoSuchWareException;
+import com.home.onlineshop.exceptions.NoSuchWareException;
 import com.home.onlineshop.exceptions.WareResourceNotFoundException;
 import com.home.onlineshop.mapper.WareMapper;
 import com.home.onlineshop.repository.WareRepository;
@@ -42,6 +42,8 @@ public class WareServiceImpl implements WareService {
     @Transactional
     @Override
     public WareDto update(WareDto dto) {
+
+
         WareDto currentWareDto = wareMapper.entityToDto(wareRepository.getWareById(dto.getId()));
         wareRepository.save(wareMapper.dtoToEntity(dto));
         return wareMapper.entityToDto(wareRepository.getWareById(dto.getId()));
@@ -71,7 +73,7 @@ public class WareServiceImpl implements WareService {
     @Override
     @Transactional
     public void delete(Long id) {
-        Ware ware = wareRepository.findById(id).orElseThrow(ThereIsNoSuchWareException::new);
+        Ware ware = wareRepository.findById(id).orElseThrow(NoSuchWareException::new);
         wareRepository.delete(ware);
     }
 }

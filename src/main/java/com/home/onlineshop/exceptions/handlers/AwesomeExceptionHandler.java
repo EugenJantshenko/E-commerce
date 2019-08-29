@@ -1,8 +1,8 @@
 package com.home.onlineshop.exceptions.handlers;
 
-import com.home.onlineshop.exceptions.ThereIsNoSuchWareException;
-import com.home.onlineshop.exceptions.ThereIsNoSuchWareCategoryException;
-import com.home.onlineshop.exceptions.ThereIsNoSuchWareTypeException;
+import com.home.onlineshop.exceptions.NoSuchWareException;
+import com.home.onlineshop.exceptions.NoSuchWareCategoryException;
+import com.home.onlineshop.exceptions.NoSuchWareTypeException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -20,17 +20,17 @@ public class AwesomeExceptionHandler extends ResponseEntityExceptionHandler {
         private String message;
     }
 
-    @ExceptionHandler(ThereIsNoSuchWareTypeException.class)
+    @ExceptionHandler(NoSuchWareTypeException.class)
     protected ResponseEntity<AwesomeException> handleThereIsNoSuchWareTypeException(){
         return new ResponseEntity<>(new AwesomeException("There is no such ware type"), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(ThereIsNoSuchWareException.class)
+    @ExceptionHandler(NoSuchWareException.class)
     protected ResponseEntity<AwesomeException> handleThereIsNoSuchWareException(){
         return new ResponseEntity<>(new AwesomeException("There is no such ware"), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(ThereIsNoSuchWareCategoryException.class)
+    @ExceptionHandler(NoSuchWareCategoryException.class)
     protected ResponseEntity<AwesomeException> handleThereIsNoSuchWareCategoryException(){
         return new ResponseEntity<>(new AwesomeException("There is no such ware category"), HttpStatus.NOT_FOUND);
     }
