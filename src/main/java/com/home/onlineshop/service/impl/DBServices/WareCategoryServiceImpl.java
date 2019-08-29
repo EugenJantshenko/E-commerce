@@ -2,7 +2,7 @@ package com.home.onlineshop.service.impl.DBServices;
 
 import com.home.onlineshop.dto.WareCategoryDto;
 import com.home.onlineshop.entity.WareCategory;
-import com.home.onlineshop.exceptions.ThereIsNoSuchWareCategoryException;
+import com.home.onlineshop.exceptions.NoSuchWareCategoryException;
 import com.home.onlineshop.exceptions.WareResourceNotFoundException;
 import com.home.onlineshop.mapper.WareCategoryMapper;
 import com.home.onlineshop.repository.WareCategoryRepository;
@@ -50,7 +50,7 @@ public class WareCategoryServiceImpl implements WareCategoryService {
     @Override
     @Transactional
     public void delete(Long id) {
-        WareCategory cat = wareCategoryRepository.findById(id).orElseThrow(ThereIsNoSuchWareCategoryException::new);
+        WareCategory cat = wareCategoryRepository.findById(id).orElseThrow(NoSuchWareCategoryException::new);
         wareCategoryRepository.delete(cat);
     }
 }

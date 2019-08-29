@@ -3,7 +3,7 @@ package com.home.onlineshop.service.impl.DBServices;
 import com.home.onlineshop.dto.WareTypeDto;
 import com.home.onlineshop.entity.WareCategory;
 import com.home.onlineshop.entity.WareType;
-import com.home.onlineshop.exceptions.ThereIsNoSuchWareTypeException;
+import com.home.onlineshop.exceptions.NoSuchWareTypeException;
 import com.home.onlineshop.exceptions.WareResourceNotFoundException;
 import com.home.onlineshop.mapper.WareCategoryMapper;
 import com.home.onlineshop.mapper.WareTypeMapper;
@@ -81,7 +81,7 @@ public class WareTypeServiceImpl implements WareTypeService {
     @Override
     @Transactional
     public void delete(Long id) {
-        WareType type = wareTypeRepository.findById(id).orElseThrow(ThereIsNoSuchWareTypeException::new);
+        WareType type = wareTypeRepository.findById(id).orElseThrow(NoSuchWareTypeException::new);
         wareTypeRepository.delete(type);
     }
 }
