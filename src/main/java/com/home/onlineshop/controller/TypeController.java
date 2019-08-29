@@ -38,4 +38,14 @@ public class TypeController {
     public void deleteType(@PathVariable("id") Long id) {
         wareTypeService.delete(id);
     }
+
+    @GetMapping("/lock/{id}")
+    public WareTypeDto lock(@PathVariable("id") Long id){
+       return wareTypeService.lock(id);
+    }
+
+    @GetMapping("/unlock/{id}")
+    public WareTypeDto unlock(@PathVariable("id") Long id){
+        return wareTypeService.unlock(id);
+    }
 }

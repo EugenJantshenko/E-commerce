@@ -28,21 +28,28 @@ public class WareServiceImpl implements WareService {
         this.wareRepository = wareRepository;
     }
 
-    @Transactional
     @Override
+    @Transactional
     public WareDto create(WareDto wareDto) {
         if (!wareRepository.existsBySerialNumber(wareDto.getSerialNumber())) {
             wareDto.setReceivedDate(LocalDateTime.now());
             wareDto.setIsSealed(true);
-            //System.out.println(wareDto.getIsSealed());
             return wareMapper.entityToDto(wareRepository.save(wareMapper.dtoToEntity(wareDto)));
         }
         throw new WareResourceNotFoundException("SerialNumber is already exist");
     }
 
-    // В процессе реализации
-    @Transactional
     @Override
+    @Transactional
+    public WareDto setSealedDate(WareDto dto) {
+        Ware ware = wareRepository.findById(dto.getId()).orElseThrow(NoSuchWareException::new);
+        ware.setSealedDate(dto.getSealedDate());
+        System.out.println(ware.getSealedDate()+" sealed Date");
+        return wareMapper.entityToDto(wareRepository.save(ware));
+    }
+
+    @Override
+    @Transactional
     public WareDto update(WareDto dto) {
         Ware ware = wareRepository.findById(dto.getId()).orElseThrow(NoSuchWareException::new);
         WareDto currentWareDto = wareMapper.entityToDto(ware);
@@ -61,8 +68,13 @@ public class WareServiceImpl implements WareService {
         return StreamSupport.stream(wareRepository.findAllByManufacturer(manufacturer).spliterator(), false)
                 .map(wareMapper::entityToDto)
                 .collect(Collectors.toList());
+    }
 
-//        return wareMapper.wareToDtoList(wareRepository.findAllByManufacturer(manufacturer));
+    @Override
+    public Iterable<WareDto> getAllByWareName(String wareName) {
+        return StreamSupport.stream(wareRepository.findAllByWareName(wareName).spliterator(),false)
+                .map(wareMapper::entityToDto)
+                .collect((Collectors.toList()));
     }
 
     @Override
@@ -86,6 +98,15 @@ public class WareServiceImpl implements WareService {
         }
         if(dto.getWareName()!=null){
             currentWare.setWareName(dto.getWareName());
+        }
+        if(dto.getIsSealed()!=null){
+            currentWare.setIsSealed(dto.getIsSealed());
+        }
+        if(dto.getSealedDate()!=null){
+            currentWare.setSealedDate(dto.getSealedDate());
+        }
+        if(dto.getReceivedDate()!=null){
+            currentWare.setReceivedDate(dto.getReceivedDate());
         }
         return currentWare;
     }

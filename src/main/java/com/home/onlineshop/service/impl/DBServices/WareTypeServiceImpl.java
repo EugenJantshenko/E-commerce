@@ -59,23 +59,17 @@ public class WareTypeServiceImpl implements WareTypeService {
     }
 
     @Override
-    public boolean lock(String typeName) {
-        if (!wareTypeRepository.findByTypeName(typeName).isBlocked()) {
-            wareTypeRepository.findByTypeName(typeName).setBlocked(true);
-            return true;
-        } else {
-            return false;
-        }
+    public WareTypeDto lock(Long id) {
+        WareType type =wareTypeRepository.findById(id).orElseThrow(NoSuchWareTypeException::new);
+        type.setBlocked(true);
+        return wareTypeMapper.entityToDto(type);
     }
 
     @Override
-    public boolean unlock(String typeName) {
-        if (wareTypeRepository.findByTypeName(typeName).isBlocked()) {
-            wareTypeRepository.findByTypeName(typeName).setBlocked(false);
-            return true;
-        } else {
-            return false;
-        }
+    public WareTypeDto unlock(Long id) {
+       WareType type =wareTypeRepository.findById(id).orElseThrow(NoSuchWareTypeException::new);
+       type.setBlocked(false);
+       return wareTypeMapper.entityToDto(type);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.home.onlineshop.controller;
 
 import com.home.onlineshop.dto.WareDto;
+import com.home.onlineshop.service.interfaces.DBServices.WareCountService;
 import com.home.onlineshop.service.interfaces.DBServices.WareService;
 import com.home.onlineshop.service.interfaces.mailSerivces.SendReportToMail;
 import lombok.extern.slf4j.Slf4j;
@@ -21,11 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class WareController {
 
     private final WareService wareService;
+    private final WareCountService wareCountService;
     private final SendReportToMail sendReportToMail;
 
     @Autowired
-    public WareController(WareService wareService, SendReportToMail sendReportToMail) {
+    public WareController(WareService wareService, WareCountService wareCountService, SendReportToMail sendReportToMail) {
         this.wareService = wareService;
+        this.wareCountService = wareCountService;
         this.sendReportToMail = sendReportToMail;
     }
 
@@ -39,6 +42,11 @@ public class WareController {
         return wareService.getAll();
     }
 
+    @GetMapping("/getCount/{id}")
+    public Long getCount(@PathVariable("id") Long id){
+        return wareCountService.getCountById(id);
+    }
+
     @PostMapping("/create")
     @ResponseBody
     public WareDto createWare(@RequestBody WareDto wareDto) {
@@ -50,6 +58,13 @@ public class WareController {
     public WareDto updateWare(@PathVariable("id") Long id, @RequestBody WareDto wareDto) {
         wareDto.setId(id);
         return wareService.update(wareDto);
+    }
+
+    @PutMapping("/setSealedDate/{id}")
+    @ResponseBody
+    public WareDto setSealedDate(@PathVariable("id") Long id, @RequestBody WareDto wareDto){
+        wareDto.setId(id);
+        return wareService.setSealedDate(wareDto);
     }
 
     @DeleteMapping("/{id}")

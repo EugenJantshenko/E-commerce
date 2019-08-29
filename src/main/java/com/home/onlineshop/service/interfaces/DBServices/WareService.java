@@ -14,5 +14,9 @@ public interface WareService {
 
     Iterable<WareDto> getAllByManufacturer(String manufacturer);
 
+    Iterable<WareDto> getAllByWareName(String wareName);
+
     boolean existsById(Long id);
+
+    WareDto setSealedDate(WareDto dto);
 }
