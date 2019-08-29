@@ -1,7 +1,10 @@
 package com.home.onlineshop.service.impl.DBServices;
 
 import com.home.onlineshop.dto.WareTypeDto;
+import com.home.onlineshop.entity.WareCategory;
 import com.home.onlineshop.entity.WareType;
+import com.home.onlineshop.exceptions.ThereIsNoSuchWareTypeException;
+import com.home.onlineshop.exceptions.WareResourceNotFoundException;
 import com.home.onlineshop.mapper.WareCategoryMapper;
 import com.home.onlineshop.mapper.WareTypeMapper;
 import com.home.onlineshop.repository.WareCategoryRepository;
@@ -12,6 +15,9 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @Service
@@ -33,20 +39,27 @@ public class WareTypeServiceImpl implements WareTypeService {
     @Override
     @Transactional
     public WareTypeDto create(String typeName, Long categoryId) {
-        WareTypeDto newDto = new WareTypeDto();
-        newDto.setTypeName(typeName);
-        newDto.setWareCategory(wareCategoryMapper.categoryToDto(wareCategoryRepository.findById(categoryId).get()));
-        wareTypeRepository.save(wareTypeMapper.wareTypeDtoToWareType(newDto));
-        return wareTypeMapper.wareTypeToWareTypeDto(wareTypeRepository.findByTypeName(typeName));
+        if (!wareTypeRepository.existsByTypeName(typeName)) {
+            WareCategory wareCategory = wareCategoryRepository.findById(categoryId)
+                    .orElseThrow(WareResourceNotFoundException::new);
+            WareType wareType = new WareType();
+            wareType.setTypeName(typeName);
+            wareType.setWareCategory(wareCategory);
+            WareType ware = wareTypeRepository.save(wareType);
+            return wareTypeMapper.entityToDto(ware);
+        }
+        throw new WareResourceNotFoundException("type already exist");
     }
 
     @Override
-    public Iterable<WareType> getAll() {
-        return wareTypeRepository.findAll();
+    public Iterable<WareTypeDto> getAll() {
+        return StreamSupport.stream(wareTypeRepository.findAll().spliterator(), false)
+                .map(wareTypeMapper::entityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public boolean block(String typeName) {
+    public boolean lock(String typeName) {
         if (!wareTypeRepository.findByTypeName(typeName).isBlocked()) {
             wareTypeRepository.findByTypeName(typeName).setBlocked(true);
             return true;
@@ -56,12 +69,19 @@ public class WareTypeServiceImpl implements WareTypeService {
     }
 
     @Override
-    public boolean unblock(String typeName) {
+    public boolean unlock(String typeName) {
         if (wareTypeRepository.findByTypeName(typeName).isBlocked()) {
             wareTypeRepository.findByTypeName(typeName).setBlocked(false);
             return true;
         } else {
             return false;
         }
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        WareType type = wareTypeRepository.findById(id).orElseThrow(ThereIsNoSuchWareTypeException::new);
+        wareTypeRepository.delete(type);
     }
 }

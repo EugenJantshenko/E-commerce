@@ -2,6 +2,8 @@ package com.home.onlineshop.service.impl.DBServices;
 
 import com.home.onlineshop.dto.WareCategoryDto;
 import com.home.onlineshop.entity.WareCategory;
+import com.home.onlineshop.exceptions.ThereIsNoSuchWareCategoryException;
+import com.home.onlineshop.exceptions.WareResourceNotFoundException;
 import com.home.onlineshop.mapper.WareCategoryMapper;
 import com.home.onlineshop.repository.WareCategoryRepository;
 import com.home.onlineshop.service.interfaces.DBServices.WareCategoryService;
@@ -11,12 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @Slf4j
 @Service
 @Transactional(readOnly = true)
 public class WareCategoryServiceImpl implements WareCategoryService {
     private final WareCategoryRepository wareCategoryRepository;
-    private static  WareCategoryMapper wareCategoryMapper = Mappers.getMapper(WareCategoryMapper.class);
+    private static WareCategoryMapper wareCategoryMapper = Mappers.getMapper(WareCategoryMapper.class);
 
     @Autowired
     public WareCategoryServiceImpl(WareCategoryRepository wareCategoryRepository) {
@@ -26,14 +31,26 @@ public class WareCategoryServiceImpl implements WareCategoryService {
     @Override
     @Transactional
     public WareCategoryDto create(String wareCategoryName) {
-        WareCategoryDto newDto = new WareCategoryDto();
-        newDto.setCategoryName(wareCategoryName);
-        wareCategoryRepository.save(wareCategoryMapper.dtoToCategory(newDto));
-        return wareCategoryMapper.categoryToDto(wareCategoryRepository.findByCategoryName(wareCategoryName));
+       if(!wareCategoryRepository.existsByCategoryName(wareCategoryName)){
+           WareCategory category=new WareCategory();
+           category.setCategoryName(wareCategoryName);
+           WareCategory createdCategory = wareCategoryRepository.save(category);
+           return wareCategoryMapper.entityToDto(createdCategory);
+       }
+       throw new WareResourceNotFoundException("Category already exist");
     }
 
     @Override
-    public Iterable<WareCategory> getAll() {
-        return wareCategoryRepository.findAll();
+    public Iterable<WareCategoryDto> getAll() {
+        return StreamSupport.stream(wareCategoryRepository.findAll().spliterator(),false)
+                .map(wareCategoryMapper::entityToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        WareCategory cat = wareCategoryRepository.findById(id).orElseThrow(ThereIsNoSuchWareCategoryException::new);
+        wareCategoryRepository.delete(cat);
     }
 }

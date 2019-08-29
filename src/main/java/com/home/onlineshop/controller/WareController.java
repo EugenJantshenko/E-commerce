@@ -1,14 +1,11 @@
 package com.home.onlineshop.controller;
 
-import com.home.onlineshop.dto.WareCategoryDto;
 import com.home.onlineshop.dto.WareDto;
-import com.home.onlineshop.dto.WareTypeDto;
-import com.home.onlineshop.service.interfaces.DBServices.WareCategoryService;
 import com.home.onlineshop.service.interfaces.DBServices.WareService;
-import com.home.onlineshop.service.interfaces.DBServices.WareTypeService;
 import com.home.onlineshop.service.interfaces.mailSerivces.SendReportToMail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,51 +17,35 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/rest")
-public class ResController {
+@RequestMapping("/ware")
+public class WareController {
 
-    private final WareCategoryService wareCategoryService;
-    private final WareTypeService wareTypeService;
     private final WareService wareService;
     private final SendReportToMail sendReportToMail;
 
     @Autowired
-    public ResController(WareCategoryService wareCategoryService, WareTypeService wareTypeService, WareService wareService, SendReportToMail sendReportToMail) {
-        this.wareCategoryService = wareCategoryService;
-        this.wareTypeService = wareTypeService;
+    public WareController(WareService wareService, SendReportToMail sendReportToMail) {
         this.wareService = wareService;
         this.sendReportToMail = sendReportToMail;
     }
 
     @GetMapping("/send-mail")
     public void sendMail() throws Exception {
-        sendReportToMail.SendEmail("kryoengineer@gmail.com","Test Mail", "Это провреочное писмо по состянию товара на складе");
+        sendReportToMail.sendEmail("kryoengineer@gmail.com","Test Mail", "Это провреочное писмо по состянию товара на складе");
     }
 
-    @GetMapping("/wares")
+    @GetMapping("/getAll")
     public Iterable<WareDto> getAllWares() {
         return wareService.getAll();
     }
 
-    @PostMapping("/create-category")
-    @ResponseBody
-    public WareCategoryDto createCategory(@RequestBody WareCategoryDto wareCategoryDto) {
-        return wareCategoryService.create(wareCategoryDto.getCategoryName());
-    }
-
-    @PostMapping("/create-type")
-    @ResponseBody
-    public WareTypeDto createType(@RequestBody WareTypeDto wareTypeDto) {
-        return wareTypeService.create(wareTypeDto.getTypeName(), wareTypeDto.getWareCategory().getId());
-    }
-
-    @PostMapping("/create-ware")
+    @PostMapping("/create")
     @ResponseBody
     public WareDto createWare(@RequestBody WareDto wareDto) {
         return wareService.create(wareDto);
     }
 
-    @PutMapping("/update-ware/{id}")
+    @PutMapping("/update/{id}")
     @ResponseBody
     public WareDto updateWare(@PathVariable("id") Long id, @RequestBody WareDto wareDto) {
         if (wareService.existsById(id)) {
@@ -75,4 +56,13 @@ public class ResController {
             return null;
         }
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteWare(@PathVariable("id") Long id){
+        wareService.delete(id);
+    }
+
+
+
+
 }

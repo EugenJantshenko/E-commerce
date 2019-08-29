@@ -11,14 +11,18 @@ import javax.mail.internet.MimeMessage;
 @Service
 public class SendReportToMailImpl implements SendReportToMail {
 
+    private final JavaMailSender sender;
+
     @Autowired
-    private JavaMailSender sender;
+    public SendReportToMailImpl(JavaMailSender sender) {
+        this.sender = sender;
+    }
 
     @Override
-    public void SendEmail(String to, String subject, String text) throws Exception {
+    public void sendEmail(String to, String subject, String text) throws Exception {
 
         MimeMessage message = sender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message,true);
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(to);
         helper.setText(text);
         helper.setSubject(subject);

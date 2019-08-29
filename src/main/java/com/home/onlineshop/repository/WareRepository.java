@@ -3,7 +3,6 @@ package com.home.onlineshop.repository;
 import com.home.onlineshop.entity.Ware;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface WareRepository extends CrudRepository<Ware, Long> {
@@ -20,7 +19,9 @@ public interface WareRepository extends CrudRepository<Ware, Long> {
 
     boolean existsByManufacturer(String manufacturer);
 
-    List<Ware> findAllByManufacturer(String manufacturer);
+    Iterable<Ware> findAllByManufacturer(String manufacturer);
 
     boolean deleteByWareName(String name);
+
+    boolean existsBySerialNumber(String serialNumber);
 }
