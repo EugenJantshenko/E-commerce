@@ -4,6 +4,7 @@ import com.home.onlineshop.exceptions.NoSuchWareException;
 import com.home.onlineshop.exceptions.NoSuchWareCategoryException;
 import com.home.onlineshop.exceptions.NoSuchWareTypeException;
 import com.home.onlineshop.exceptions.NotEnoughWareException;
+import com.home.onlineshop.exceptions.WareAlreadyExistException;
 import com.home.onlineshop.exceptions.WareResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,5 +46,10 @@ public class AwesomeExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NotEnoughWareException.class)
     protected ResponseEntity<AwesomeException> handleThereIsNotEnoughWareException(){
         return new ResponseEntity<>(new AwesomeException("There is not enough ware"), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(WareAlreadyExistException.class)
+    protected ResponseEntity<AwesomeException> handleWareAlreadyExistException(){
+        return new ResponseEntity<>(new AwesomeException("Ware with those SerialNumber already Exist"), HttpStatus.EXPECTATION_FAILED);
     }
 }

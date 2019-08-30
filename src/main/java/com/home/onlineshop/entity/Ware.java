@@ -59,6 +59,6 @@ public class Ware implements Serializable {
     @Basic
     private LocalDateTime sealedDate;
 
-    @Column(name = "sealed", columnDefinition = "int default 0")
-    private boolean isSealed;
+    @Column(name = "sealed")
+    private Boolean isSealed;
 }

@@ -53,10 +53,9 @@ public class WareController {
         return wareService.create(wareDto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update")
     @ResponseBody
-    public WareDto updateWare(@PathVariable("id") Long id, @RequestBody WareDto wareDto) {
-        wareDto.setId(id);
+    public WareDto updateWare(@RequestBody WareDto wareDto) {
         return wareService.update(wareDto);
     }
 

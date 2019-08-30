@@ -3,7 +3,7 @@ package com.home.onlineshop.service.impl.DBServices;
 import com.home.onlineshop.dto.WareDto;
 import com.home.onlineshop.entity.Ware;
 import com.home.onlineshop.exceptions.NoSuchWareException;
-import com.home.onlineshop.exceptions.WareResourceNotFoundException;
+import com.home.onlineshop.exceptions.WareAlreadyExistException;
 import com.home.onlineshop.mapper.WareMapper;
 import com.home.onlineshop.repository.WareRepository;
 import com.home.onlineshop.service.interfaces.DBServices.WareService;
@@ -28,24 +28,26 @@ public class WareServiceImpl implements WareService {
         this.wareRepository = wareRepository;
     }
 
-    @Override
-    @Transactional
-    public WareDto create(WareDto wareDto) {
-        if (!wareRepository.existsBySerialNumber(wareDto.getSerialNumber())) {
-            wareDto.setReceivedDate(LocalDateTime.now());
-            wareDto.setIsSealed(true);
-            return wareMapper.entityToDto(wareRepository.save(wareMapper.dtoToEntity(wareDto)));
-        }
-        throw new WareResourceNotFoundException("SerialNumber is already exist");
-    }
+
+    //todo сделать метод противоположным
+//    @Override
+//    @Transactional
+//    public WareDto create(WareDto wareDto) {
+//        Ware ware = wareRepository.existsWareBySerialNumberIsNotLike(wareDto.getSerialNumber()).orElseThrow(WareAlreadyExistException::new);
+//        ware.setReceivedDate(LocalDateTime.now());
+//        ware.setIsSealed(false);
+//        return wareMapper.entityToDto(wareRepository.save(ware));
+//    }
 
     @Override
     @Transactional
-    public WareDto setSealedDate(WareDto dto) {
-        Ware ware = wareRepository.findById(dto.getId()).orElseThrow(NoSuchWareException::new);
-        ware.setSealedDate(dto.getSealedDate());
-        System.out.println(ware.getSealedDate()+" sealed Date");
-        return wareMapper.entityToDto(wareRepository.save(ware));
+    public WareDto create(WareDto wareDto) {
+        wareDto.setReceivedDate(LocalDateTime.now());
+        wareDto.setIsSealed(false);
+        if (!wareRepository.existsBySerialNumber(wareDto.getSerialNumber())) {
+            return wareMapper.entityToDto(wareRepository.save(wareMapper.dtoToEntity(wareDto)));
+        }
+        throw new WareAlreadyExistException();
     }
 
     @Override
@@ -53,7 +55,18 @@ public class WareServiceImpl implements WareService {
     public WareDto update(WareDto dto) {
         Ware ware = wareRepository.findById(dto.getId()).orElseThrow(NoSuchWareException::new);
         WareDto currentWareDto = wareMapper.entityToDto(ware);
-        return wareMapper.entityToDto(wareRepository.save(wareMapper.dtoToEntity(fillTheValues(dto,currentWareDto))));
+        ware = wareMapper.dtoToEntity(fillTheValues(dto, currentWareDto));
+        wareRepository.save(ware);
+        return wareMapper.entityToDto(ware);
+    }
+
+    @Override
+    @Transactional
+    public WareDto setSealedDate(WareDto dto) {
+        Ware ware = wareRepository.findById(dto.getId()).orElseThrow(NoSuchWareException::new);
+        ware.setSealedDate(dto.getSealedDate());
+        System.out.println(ware.getSealedDate() + " sealed Date");
+        return wareMapper.entityToDto(wareRepository.save(ware));
     }
 
     @Override
@@ -72,7 +85,7 @@ public class WareServiceImpl implements WareService {
 
     @Override
     public Iterable<WareDto> getAllByWareName(String wareName) {
-        return StreamSupport.stream(wareRepository.findAllByWareName(wareName).spliterator(),false)
+        return StreamSupport.stream(wareRepository.findAllByWareName(wareName).spliterator(), false)
                 .map(wareMapper::entityToDto)
                 .collect((Collectors.toList()));
     }
@@ -89,23 +102,23 @@ public class WareServiceImpl implements WareService {
         wareRepository.delete(ware);
     }
 
-    private WareDto fillTheValues(WareDto dto,WareDto currentWare) {
+    private WareDto fillTheValues(WareDto dto, WareDto currentWare) {
         if (dto.getManufacturer() != null) {
             currentWare.setManufacturer(dto.getManufacturer());
         }
         if (dto.getPrice() != null) {
             currentWare.setPrice(dto.getPrice());
         }
-        if(dto.getWareName()!=null){
+        if (dto.getWareName() != null) {
             currentWare.setWareName(dto.getWareName());
         }
-        if(dto.getIsSealed()!=null){
-            currentWare.setIsSealed(dto.getIsSealed());
-        }
-        if(dto.getSealedDate()!=null){
+//        if (dto.getIsSealed() == true || dto.getIsSealed()==false) {
+        currentWare.setIsSealed(dto.getIsSealed());
+//        }
+        if (dto.getSealedDate() != null) {
             currentWare.setSealedDate(dto.getSealedDate());
         }
-        if(dto.getReceivedDate()!=null){
+        if (dto.getReceivedDate() != null) {
             currentWare.setReceivedDate(dto.getReceivedDate());
         }
         return currentWare;
