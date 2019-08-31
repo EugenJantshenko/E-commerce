@@ -1,7 +1,7 @@
 create table ware
 (
     id            bigint not null auto_increment,
-    sealed        boolean default false,
+    sold          boolean default false,
     manufacturer  varchar(255),
     price         double precision,
     received_date date,

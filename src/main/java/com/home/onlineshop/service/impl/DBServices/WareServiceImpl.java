@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -28,34 +29,23 @@ public class WareServiceImpl implements WareService {
         this.wareRepository = wareRepository;
     }
 
-
-    //todo сделать метод противоположным
-//    @Override
-//    @Transactional
-//    public WareDto create(WareDto wareDto) {
-//        Ware ware = wareRepository.existsWareBySerialNumberIsNotLike(wareDto.getSerialNumber()).orElseThrow(WareAlreadyExistException::new);
-//        ware.setReceivedDate(LocalDateTime.now());
-//        ware.setIsSealed(false);
-//        return wareMapper.entityToDto(wareRepository.save(ware));
-//    }
-
     @Override
     @Transactional
-    public WareDto create(WareDto wareDto) {
-        wareDto.setReceivedDate(LocalDateTime.now());
-        wareDto.setIsSealed(false);
-        if (!wareRepository.existsBySerialNumber(wareDto.getSerialNumber())) {
-            return wareMapper.entityToDto(wareRepository.save(wareMapper.dtoToEntity(wareDto)));
+    public WareDto create(WareDto dto) {
+        Optional<Ware> wareEntity = wareRepository.findBySerialNumber(dto.getSerialNumber());
+        if (wareEntity.isPresent()) {
+            throw new WareAlreadyExistException(String.format("ware with serial number %s already exist", dto.getSerialNumber()));
         }
-        throw new WareAlreadyExistException();
+        Ware ware = wareMapper.dtoToEntity(dto);
+        ware.setReceivedDate(LocalDateTime.now());
+        return wareMapper.entityToDto(wareRepository.save(ware));
     }
 
     @Override
     @Transactional
     public WareDto update(WareDto dto) {
         Ware ware = wareRepository.findById(dto.getId()).orElseThrow(NoSuchWareException::new);
-        WareDto currentWareDto = wareMapper.entityToDto(ware);
-        ware = wareMapper.dtoToEntity(fillTheValues(dto, currentWareDto));
+        ware = wareMapper.dtoToEntity(dto);
         wareRepository.save(ware);
         return wareMapper.entityToDto(ware);
     }
@@ -100,27 +90,5 @@ public class WareServiceImpl implements WareService {
     public void delete(Long id) {
         Ware ware = wareRepository.findById(id).orElseThrow(NoSuchWareException::new);
         wareRepository.delete(ware);
-    }
-
-    private WareDto fillTheValues(WareDto dto, WareDto currentWare) {
-        if (dto.getManufacturer() != null) {
-            currentWare.setManufacturer(dto.getManufacturer());
-        }
-        if (dto.getPrice() != null) {
-            currentWare.setPrice(dto.getPrice());
-        }
-        if (dto.getWareName() != null) {
-            currentWare.setWareName(dto.getWareName());
-        }
-//        if (dto.getIsSealed() == true || dto.getIsSealed()==false) {
-        currentWare.setIsSealed(dto.getIsSealed());
-//        }
-        if (dto.getSealedDate() != null) {
-            currentWare.setSealedDate(dto.getSealedDate());
-        }
-        if (dto.getReceivedDate() != null) {
-            currentWare.setReceivedDate(dto.getReceivedDate());
-        }
-        return currentWare;
     }
 }

@@ -59,10 +59,9 @@ public class WareController {
         return wareService.update(wareDto);
     }
 
-    @PutMapping("/setSealedDate/{id}")
+    @PutMapping("/setSealedDate")
     @ResponseBody
-    public WareDto setSealedDate(@PathVariable("id") Long id, @RequestBody WareDto wareDto){
-        wareDto.setId(id);
+    public WareDto setSealedDate(@RequestBody WareDto wareDto){
         return wareService.setSealedDate(wareDto);
     }
 

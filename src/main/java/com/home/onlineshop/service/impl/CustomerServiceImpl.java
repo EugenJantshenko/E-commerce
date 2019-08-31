@@ -43,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
         Iterable<WareDto> wareList = wareService.getAllByWareName(wareDto.getWareName());
         if (balance >= count) {
             cart.put(wareDto.getWareCount().getId(), count);
-            wareDto.setIsSealed(true);
+            wareDto.setSold(true);
 //            wareRepository.save(ware);
         } else throw new NotEnoughWareException();
         return false;

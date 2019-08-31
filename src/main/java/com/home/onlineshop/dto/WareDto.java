@@ -17,5 +17,5 @@ public class WareDto {
     private Double price;
     private LocalDateTime receivedDate;
     private LocalDateTime sealedDate;
-    private Boolean isSealed;
+    private Boolean sold;
 }
