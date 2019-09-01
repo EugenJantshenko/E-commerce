@@ -31,8 +31,10 @@ public class WareServiceImpl implements WareService {
     @Transactional
     @Override
     public WareDto create(WareDto wareDto) {
-        if(!wareRepository.existsBySerialNumber(wareDto.getSerialNumber())) {
+        if (!wareRepository.existsBySerialNumber(wareDto.getSerialNumber())) {
             wareDto.setReceivedDate(LocalDateTime.now());
+            wareDto.setIsSealed(true);
+            //System.out.println(wareDto.getIsSealed());
             return wareMapper.entityToDto(wareRepository.save(wareMapper.dtoToEntity(wareDto)));
         }
         throw new WareResourceNotFoundException("SerialNumber is already exist");
@@ -42,23 +44,21 @@ public class WareServiceImpl implements WareService {
     @Transactional
     @Override
     public WareDto update(WareDto dto) {
-
-
-        WareDto currentWareDto = wareMapper.entityToDto(wareRepository.getWareById(dto.getId()));
-        wareRepository.save(wareMapper.dtoToEntity(dto));
-        return wareMapper.entityToDto(wareRepository.getWareById(dto.getId()));
+        Ware ware = wareRepository.findById(dto.getId()).orElseThrow(NoSuchWareException::new);
+        WareDto currentWareDto = wareMapper.entityToDto(ware);
+        return wareMapper.entityToDto(wareRepository.save(wareMapper.dtoToEntity(fillTheValues(dto,currentWareDto))));
     }
 
     @Override
     public Iterable<WareDto> getAll() {
-        return StreamSupport.stream(wareRepository.findAll().spliterator(),false)
+        return StreamSupport.stream(wareRepository.findAll().spliterator(), false)
                 .map(wareMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Iterable<WareDto> getAllByManufacturer(String manufacturer) {
-        return StreamSupport.stream(wareRepository.findAllByManufacturer(manufacturer).spliterator(),false)
+        return StreamSupport.stream(wareRepository.findAllByManufacturer(manufacturer).spliterator(), false)
                 .map(wareMapper::entityToDto)
                 .collect(Collectors.toList());
 
@@ -75,5 +75,18 @@ public class WareServiceImpl implements WareService {
     public void delete(Long id) {
         Ware ware = wareRepository.findById(id).orElseThrow(NoSuchWareException::new);
         wareRepository.delete(ware);
+    }
+
+    private WareDto fillTheValues(WareDto dto,WareDto currentWare) {
+        if (dto.getManufacturer() != null) {
+            currentWare.setManufacturer(dto.getManufacturer());
+        }
+        if (dto.getPrice() != null) {
+            currentWare.setPrice(dto.getPrice());
+        }
+        if(dto.getWareName()!=null){
+            currentWare.setWareName(dto.getWareName());
+        }
+        return currentWare;
     }
 }

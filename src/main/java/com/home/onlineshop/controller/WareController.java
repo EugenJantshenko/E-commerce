@@ -31,7 +31,7 @@ public class WareController {
 
     @GetMapping("/send-mail")
     public void sendMail() throws Exception {
-        sendReportToMail.sendEmail("kryoengineer@gmail.com","Test Mail", "Это провреочное писмо по состянию товара на складе");
+        sendReportToMail.sendEmail("kryoengineer@gmail.com", "Test Mail", "Это провреочное писмо по состянию товара на складе");
     }
 
     @GetMapping("/getAll")
@@ -45,24 +45,17 @@ public class WareController {
         return wareService.create(wareDto);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     @ResponseBody
     public WareDto updateWare(@PathVariable("id") Long id, @RequestBody WareDto wareDto) {
-        if (wareService.existsById(id)) {
-            wareDto.setId(id);
-            return wareService.update(wareDto);
-        } else {
-            log.warn("No ware with id: " + id);
-            return null;
-        }
+        wareDto.setId(id);
+        return wareService.update(wareDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteWare(@PathVariable("id") Long id){
+    public void deleteWare(@PathVariable("id") Long id) {
         wareService.delete(id);
     }
-
-
 
 
 }
