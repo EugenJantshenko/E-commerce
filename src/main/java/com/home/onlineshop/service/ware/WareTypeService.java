@@ -1,4 +1,4 @@
-package com.home.onlineshop.service.interfaces.DBServices;
+package com.home.onlineshop.service.ware;
 
 import com.home.onlineshop.dto.WareTypeDto;
 
@@ -8,9 +8,9 @@ public interface WareTypeService {
 
     Iterable<WareTypeDto> getAll();
 
-    boolean lock(String typeName);
+    WareTypeDto lock(Long id);
 
-    boolean unlock(String typeName);
+    WareTypeDto unlock(Long id);
 
     void delete(Long id);
 

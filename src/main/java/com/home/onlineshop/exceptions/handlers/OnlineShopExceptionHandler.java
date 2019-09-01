@@ -1,24 +1,34 @@
 package com.home.onlineshop.exceptions.handlers;
 
-import com.home.onlineshop.exceptions.NoSuchWareException;
 import com.home.onlineshop.exceptions.NoSuchWareCategoryException;
+import com.home.onlineshop.exceptions.NoSuchWareException;
 import com.home.onlineshop.exceptions.NoSuchWareTypeException;
+import com.home.onlineshop.exceptions.NotEnoughWareException;
+import com.home.onlineshop.exceptions.WareAlreadyExistException;
+import com.home.onlineshop.exceptions.WareResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+@Slf4j
 @ControllerAdvice
-public class AwesomeExceptionHandler extends ResponseEntityExceptionHandler {
+public class OnlineShopExceptionHandler {
 
     @Data
     @AllArgsConstructor
     private static class AwesomeException {
         private String message;
     }
+
+//    @ExceptionHandler(Exception.class)
+//    public void exception(Exception e){
+//        e.printStackTrace();
+//        log.error(e.getMessage(), e);
+//    }
 
     @ExceptionHandler(NoSuchWareTypeException.class)
     protected ResponseEntity<AwesomeException> handleThereIsNoSuchWareTypeException(){
@@ -33,5 +43,20 @@ public class AwesomeExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NoSuchWareCategoryException.class)
     protected ResponseEntity<AwesomeException> handleThereIsNoSuchWareCategoryException(){
         return new ResponseEntity<>(new AwesomeException("There is no such ware category"), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(WareResourceNotFoundException.class)
+    protected ResponseEntity<AwesomeException> handleWareResourceNotFoundException(){
+        return new ResponseEntity<>(new AwesomeException("Ware resource not fount"), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NotEnoughWareException.class)
+    protected ResponseEntity<AwesomeException> handleThereIsNotEnoughWareException(){
+        return new ResponseEntity<>(new AwesomeException("There is not enough ware"), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(WareAlreadyExistException.class)
+    protected ResponseEntity<AwesomeException> handleWareAlreadyExistException(){
+        return new ResponseEntity<>(new AwesomeException("Ware with those SerialNumber already Exist"), HttpStatus.EXPECTATION_FAILED);
     }
 }

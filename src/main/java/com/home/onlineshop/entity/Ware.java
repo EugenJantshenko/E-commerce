@@ -1,6 +1,5 @@
 package com.home.onlineshop.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
 
 @Entity
 @Getter
@@ -46,10 +44,6 @@ public class Ware implements Serializable {
     @JoinColumn(name = "type_id")
     private WareType wareType;
 
-    @ManyToOne
-    @JoinColumn(name="name_id")
-    private WareCount wareCount;
-
     @Column(name = "price")
     private double price;
 
@@ -59,6 +53,6 @@ public class Ware implements Serializable {
     @Basic
     private LocalDateTime sealedDate;
 
-    @Column(name = "sealed", columnDefinition = "int default 0")
-    private boolean isSealed;
+    @Column(name = "sold")
+    private Boolean sold;
 }

@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class WareTypeDto {
-
     private Long id;
     private String typeName;
     private WareCategoryDto wareCategory;

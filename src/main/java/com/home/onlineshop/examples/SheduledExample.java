@@ -1,7 +1,7 @@
 package com.home.onlineshop.examples;
 
 import com.home.onlineshop.repository.WareRepository;
-import com.home.onlineshop.service.interfaces.mailSerivces.SendReportToMail;
+import com.home.onlineshop.service.mail.SendReportToMail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
