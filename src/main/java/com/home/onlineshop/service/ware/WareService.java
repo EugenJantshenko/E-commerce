@@ -1,4 +1,4 @@
-package com.home.onlineshop.service.interfaces.DBServices;
+package com.home.onlineshop.service.ware;
 
 import com.home.onlineshop.dto.WareDto;
 
@@ -16,7 +16,4 @@ public interface WareService {
 
     Iterable<WareDto> getAllByWareName(String wareName);
 
-    boolean existsById(Long id);
-
-    WareDto setSealedDate(WareDto dto);
 }

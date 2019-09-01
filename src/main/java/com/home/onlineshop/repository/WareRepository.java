@@ -15,7 +15,4 @@ public interface WareRepository extends CrudRepository<Ware, Long> {
 
     Optional<Ware> findBySerialNumber(String serialNumber);
 
-    boolean existsBySerialNumber(String serialNumber);
-
-    Optional<Ware> existsAllBySerialNumberIsNot(String serialNumber);
 }

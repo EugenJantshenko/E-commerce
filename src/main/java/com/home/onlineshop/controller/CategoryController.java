@@ -2,7 +2,7 @@ package com.home.onlineshop.controller;
 
 
 import com.home.onlineshop.dto.WareCategoryDto;
-import com.home.onlineshop.service.interfaces.DBServices.WareCategoryService;
+import com.home.onlineshop.service.ware.WareCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/categories")
 public class CategoryController {
 
     private final WareCategoryService wareCategoryService;
@@ -24,11 +24,10 @@ public class CategoryController {
         this.wareCategoryService = wareCategoryService;
     }
 
-    @GetMapping("/getAll")
-    public Iterable<WareCategoryDto> getAllCategory() {
+    @GetMapping
+    public Iterable<WareCategoryDto> getAll() {
         return wareCategoryService.getAll();
     }
-
 
     @PostMapping("/create")
     @ResponseBody

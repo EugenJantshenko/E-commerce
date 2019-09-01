@@ -1,4 +1,4 @@
-package com.home.onlineshop.service.interfaces.DBServices;
+package com.home.onlineshop.service.ware;
 
 import com.home.onlineshop.dto.WareTypeDto;
 

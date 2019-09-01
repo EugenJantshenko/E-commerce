@@ -1,4 +1,4 @@
-package com.home.onlineshop.service.impl.DBServices;
+package com.home.onlineshop.service.ware.impl;
 
 import com.home.onlineshop.dto.WareCategoryDto;
 import com.home.onlineshop.entity.WareCategory;
@@ -6,7 +6,7 @@ import com.home.onlineshop.exceptions.NoSuchWareCategoryException;
 import com.home.onlineshop.exceptions.WareResourceNotFoundException;
 import com.home.onlineshop.mapper.WareCategoryMapper;
 import com.home.onlineshop.repository.WareCategoryRepository;
-import com.home.onlineshop.service.interfaces.DBServices.WareCategoryService;
+import com.home.onlineshop.service.ware.WareCategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +32,12 @@ public class WareCategoryServiceImpl implements WareCategoryService {
     @Transactional
     public WareCategoryDto create(String wareCategoryName) {
        if(!wareCategoryRepository.existsByCategoryName(wareCategoryName)){
-           WareCategory category=new WareCategory();
-           category.setCategoryName(wareCategoryName);
-           WareCategory createdCategory = wareCategoryRepository.save(category);
-           return wareCategoryMapper.entityToDto(createdCategory);
+           throw new WareResourceNotFoundException("Category already exist");
        }
-       throw new WareResourceNotFoundException("Category already exist");
+        WareCategory category=new WareCategory();
+        category.setCategoryName(wareCategoryName);
+        WareCategory createdCategory = wareCategoryRepository.save(category);
+        return wareCategoryMapper.entityToDto(createdCategory);
     }
 
     @Override

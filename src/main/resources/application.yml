@@ -1,4 +1,9 @@
 spring:
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    serialization:
+#      WRITE_DATES_AS_TIMESTAMPS: false
+
   jpa:
     database-platform: org.hibernate.dialect.MySQL5Dialect
     show-sql: true
@@ -29,7 +34,7 @@ spring:
 
 logging:
   level:
-    org.springframework.web: INFO
+    org.springframework: INFO
   #    org.springframework: debug
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
