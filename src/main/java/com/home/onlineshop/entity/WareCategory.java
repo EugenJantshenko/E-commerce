@@ -2,11 +2,11 @@ package com.home.onlineshop.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +18,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString
+//@ToString
 @Table(name = "ware_category")
 public class WareCategory implements Serializable {
 
@@ -29,6 +29,6 @@ public class WareCategory implements Serializable {
     @Column(name="category_name")
     private String categoryName;
 
-    @OneToMany(mappedBy = "wareCategory", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "wareCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WareType> wareTypes;
 }

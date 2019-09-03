@@ -1,5 +1,6 @@
 package com.home.onlineshop.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,14 +17,10 @@ public class WareDto implements Serializable {
     private WareTypeDto wareType;
     private Double price;
 
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
-//    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime receivedDate;
 
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
-//    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime sealedDate;
     private Boolean sold;
 }
