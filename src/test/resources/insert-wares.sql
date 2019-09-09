@@ -1,10 +1,26 @@
+INSERT INTO `ware_category` (`category_name`) VALUES ('Category 1');
+INSERT INTO `ware_category` (`category_name`) VALUES ('Category 2');
+INSERT INTO `ware_category` (`category_name`) VALUES ('Category 3');
+INSERT INTO `ware_category` (`category_name`) VALUES ('Category 4');
+INSERT INTO `ware_category` (`category_name`) VALUES ('Category 5');
+
+INSERT INTO `ware_type` (`type_name`,`category_id`) VALUES ('Type 1',1);
+INSERT INTO `ware_type` (`type_name`,`category_id`) VALUES ('Type 2',2);
+INSERT INTO `ware_type` (`type_name`,`category_id`) VALUES ('Type 3',3);
+INSERT INTO `ware_type` (`type_name`,`category_id`) VALUES ('Type 4',4);
+INSERT INTO `ware_type` (`type_name`,`category_id`) VALUES ('Type 5',1);
+INSERT INTO `ware_type` (`type_name`,`category_id`) VALUES ('Type 6',2);
+INSERT INTO `ware_type` (`type_name`,`category_id`) VALUES ('Type 7',3);
+INSERT INTO `ware_type` (`type_name`,`category_id`) VALUES ('Type 8',3);
+INSERT INTO `ware_type` (`type_name`,`category_id`) VALUES ('Type 9',4);
+
 INSERT INTO `ware` (`manufacturer`,`price`,`serial_number`,`ware_name`,`type_id`) VALUES ('Manufacturer 1','1000','1w23456','Ware 1',1);
 INSERT INTO `ware` (`manufacturer`,`price`,`serial_number`,`ware_name`,`type_id`) VALUES ('Manufacturer 1','1000','12e3456','Ware 2',2);
 INSERT INTO `ware` (`manufacturer`,`price`,`serial_number`,`ware_name`,`type_id`) VALUES ('Manufacturer 3','1000','12q3456','Ware 1',3);
 INSERT INTO `ware` (`manufacturer`,`price`,`serial_number`,`ware_name`,`type_id`) VALUES ('Manufacturer 1','1000','123r456','Ware 4',4);
-INSERT INTO `ware` (`manufacturer`,`price`,`serial_number`,`ware_name`,`type_id`) VALUES ('Manufacturer 1','1000','123f456','Ware 5',1);
+INSERT INTO `ware` (`manufacturer`,`price`,`serial_number`,`ware_name`,`type_id`) VALUES ('Manufacturer 1','1000','123f456','Ware 1',1);
 INSERT INTO `ware` (`manufacturer`,`price`,`serial_number`,`ware_name`,`type_id`) VALUES ('Manufacturer 2','1000','12qw3456','Ware 6',2);
-INSERT INTO `ware` (`manufacturer`,`price`,`serial_number`,`ware_name`,`type_id`) VALUES ('Manufacturer 1','1000','123z456','Ware 1',3);
+INSERT INTO `ware` (`manufacturer`,`price`,`serial_number`,`ware_name`,`type_id`) VALUES ('Manufacturer 1','1000','123z456','Ware 7',3);
 INSERT INTO `ware` (`manufacturer`,`price`,`serial_number`,`ware_name`,`type_id`) VALUES ('Manufacturer 1','1000','123x456','Ware 8',4);
 INSERT INTO `ware` (`manufacturer`,`price`,`serial_number`,`ware_name`,`type_id`) VALUES ('Manufacturer 3','1000','12c3456','Ware 9',1);
 INSERT INTO `ware` (`manufacturer`,`price`,`serial_number`,`ware_name`,`type_id`) VALUES ('Manufacturer 1','1000','12v3456','Ware 10',2);

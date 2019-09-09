@@ -25,6 +25,11 @@ public class WareController {
         this.wareService = wareService;
     }
 
+    @GetMapping("/hello")
+    public String hello(){
+        return "Hello";
+    }
+
     @GetMapping
     public Iterable<WareDto> getAllWares() {
         return wareService.getAll();
