@@ -1,5 +1,5 @@
-drop table ware;
+drop table ware_category cascade ;
+drop table ware_type cascade ;
+drop table ware cascade ;
 
-drop table ware_type;
 
-drop table ware_category;

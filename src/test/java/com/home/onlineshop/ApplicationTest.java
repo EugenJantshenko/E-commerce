@@ -29,7 +29,7 @@ public class ApplicationTest {
     private MockMvc mockMvc;
 
     @Test
-    public void test() {
+    public void shouldFailWhenWareControllerIsNull() {
         assertThat(controller).isNotNull();
     }
 

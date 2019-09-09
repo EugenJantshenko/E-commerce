@@ -43,7 +43,7 @@ public class WareServiceImpl implements WareService {
 
     @Override
     @Transactional
-    public WareDto update(WareDto dto) {
+    public WareDto update(@org.jetbrains.annotations.NotNull WareDto dto) {
         Optional<Ware> wareEntity=wareRepository.findById(dto.getId());
         if(!wareEntity.isPresent()){
             throw new NoSuchWareException();
