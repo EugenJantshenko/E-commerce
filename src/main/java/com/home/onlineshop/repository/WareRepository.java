@@ -9,9 +9,9 @@ public interface WareRepository extends CrudRepository<Ware, Long> {
 
     boolean existsById(Long id);
 
-    Iterable<Ware> findAllByManufacturer(String manufacturer);
+    Iterable<Ware> findAllByManufacturerId(Long id);
 
-    Iterable<Ware> findAllByWareName (String manufacturer);
+    Iterable<Ware> findAllByWareNameId (Long id);
 
     Optional<Ware> findBySerialNumber(String serialNumber);
 

@@ -71,6 +71,7 @@ public class WareTypeServiceImplTest {
     }
 
     @Test
+    @Transactional
     public void shouldDeleteWareTypeById() {
         wareTypeRepository.deleteById(1L);
         Iterable<WareType> collection = wareTypeRepository.findAll();

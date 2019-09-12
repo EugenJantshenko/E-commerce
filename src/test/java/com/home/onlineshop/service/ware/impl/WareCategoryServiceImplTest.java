@@ -45,6 +45,7 @@ public class WareCategoryServiceImplTest {
     }
 
     @Test
+    @Transactional
     public void shouldDeleteWareCategoryById() {
         wareCategoryRepository.deleteById(1L);
         Iterable<WareCategory> collection = wareCategoryRepository.findAll();

@@ -5,7 +5,7 @@ import com.home.onlineshop.dto.WareDto;
 import com.home.onlineshop.entity.Ware;
 import org.mapstruct.Mapper;
 
-@Mapper(uses = WareTypeMapper.class)
+@Mapper(uses = {WareTypeMapper.class,WareNameMapper.class,ManufacturerMapper.class})
 public interface WareMapper {
 
     Ware dtoToEntity(WareDto dto);

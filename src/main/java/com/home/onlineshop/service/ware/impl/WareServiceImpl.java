@@ -60,15 +60,15 @@ public class WareServiceImpl implements WareService {
     }
 
     @Override
-    public Iterable<WareDto> getAllByManufacturer(String manufacturer) {
-        return StreamSupport.stream(wareRepository.findAllByManufacturer(manufacturer).spliterator(), false)
+    public Iterable<WareDto> getAllByManufacturer(Long manufacturer) {
+        return StreamSupport.stream(wareRepository.findAllByManufacturerId(manufacturer).spliterator(), false)
                 .map(wareMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Iterable<WareDto> getAllByWareName(String wareName) {
-        return StreamSupport.stream(wareRepository.findAllByWareName(wareName).spliterator(), false)
+    public Iterable<WareDto> getAllByWareName(Long wareName) {
+        return StreamSupport.stream(wareRepository.findAllByWareNameId(wareName).spliterator(), false)
                 .map(wareMapper::entityToDto)
                 .collect((Collectors.toList()));
     }

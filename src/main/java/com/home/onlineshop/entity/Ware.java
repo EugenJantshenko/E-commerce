@@ -31,11 +31,13 @@ public class Ware implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ware_name")
-    private String wareName;
+    @ManyToOne
+    @JoinColumn(name = "manufacturer_id")
+    private Manufacturer manufacturerId;
 
-    @Column(name = "manufacturer")
-    private String manufacturer;
+    @ManyToOne
+    @JoinColumn(name = "ware_name_id")
+    private WareName wareName;
 
     @Column(name = "serial_number")
     private String serialNumber;
