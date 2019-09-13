@@ -20,7 +20,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final WareService wareService;
     private final WareTypeService wareTypeService;
     private final WareCategoryService wareCategoryService;
-    private Map<String, Long> cart;
+    private Map<WareDto, Long> cart;
 
     @Autowired
     public CustomerServiceImpl(WareService wareService, WareTypeService wareTypeService, WareCategoryService wareCategoryService, WareRepository wareRepository) {
@@ -30,9 +30,11 @@ public class CustomerServiceImpl implements CustomerService {
         cart = new HashMap<>();
     }
 
-    //todo make  normal logic
     @Override
     public boolean addWareToCart(WareDto wareDto, Long count) {
+
+
+
         return false;
     }
 

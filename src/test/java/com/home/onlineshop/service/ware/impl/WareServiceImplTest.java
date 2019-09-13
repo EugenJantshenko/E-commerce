@@ -1,8 +1,6 @@
 package com.home.onlineshop.service.ware.impl;
 
-import com.home.onlineshop.entity.Ware;
-import com.home.onlineshop.entity.WareCategory;
-import com.home.onlineshop.entity.WareType;
+import com.home.onlineshop.entity.*;
 import com.home.onlineshop.repository.WareRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,9 +37,9 @@ public class WareServiceImplTest {
     @Transactional
     public void shouldCreateNewWare() {
         Ware ware = new Ware();
-        ware.setWareName("TestWare");
+        ware.setWareName(new WareName());
         ware.setSold(false);
-        ware.setManufacturer("testManufacturer");
+        ware.setManufacturerId(new Manufacturer());
         ware.setPrice(123d);
         WareType type = new WareType();
         WareCategory cat = new WareCategory();
@@ -60,8 +58,8 @@ public class WareServiceImplTest {
     @Transactional
     public void shouldUpdateWareById() {
         Optional<Ware> ware = wareRepository.findById(3L);
-        ware.get().setManufacturer("new Manufacturer");
-        assertThat(wareRepository.findById(3L).get().getManufacturer()).isSameAs("new Manufacturer");
+        ware.get().setManufacturerId(new Manufacturer());
+        assertThat(wareRepository.findById(3L).get().getManufacturerId().getId()).isSameAs(3L);
     }
 
     @Test
@@ -72,17 +70,18 @@ public class WareServiceImplTest {
 
     @Test
     public void shouldCheckCountOfWareByManufacturer() {
-        Iterable<Ware> collection = wareRepository.findAllByManufacturer("Manufacturer 1");
+        Iterable<Ware> collection = wareRepository.findAllByManufacturerId(1L);
         assertThat(collection.spliterator().getExactSizeIfKnown()).isEqualTo(10);
     }
 
     @Test
     public void shouldCheckCountOfWareByWareName() {
-        Iterable<Ware> collection = wareRepository.findAllByWareName("Ware 1");
+        Iterable<Ware> collection = wareRepository.findAllByWareNameId(1L);
         assertThat(collection.spliterator().getExactSizeIfKnown()).isEqualTo(3);
     }
 
     @Test
+    @Transactional
     public void shouldDeleteWareById() {
         wareRepository.deleteById(1L);
         Iterable<Ware> collection = wareRepository.findAll();

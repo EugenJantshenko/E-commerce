@@ -12,8 +12,8 @@ public interface WareService {
 
     Iterable<WareDto> getAll();
 
-    Iterable<WareDto> getAllByManufacturer(String manufacturer);
+    Iterable<WareDto> getAllByManufacturer(Long manufacturerId);
 
-    Iterable<WareDto> getAllByWareName(String wareName);
+    Iterable<WareDto> getAllByWareName(Long wareNameId);
 
 }

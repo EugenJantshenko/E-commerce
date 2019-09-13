@@ -1,6 +1,8 @@
 package com.home.onlineshop.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.home.onlineshop.entity.Manufacturer;
+import com.home.onlineshop.entity.WareName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,8 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class WareDto implements Serializable {
     private Long id;
-    private String wareName;
-    private String manufacturer;
+    private WareName wareName;
+    private Manufacturer manufacturer;
     private String serialNumber;
     private WareTypeDto wareType;
     private Double price;

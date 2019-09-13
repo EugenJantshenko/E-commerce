@@ -36,7 +36,7 @@ public class WareController {
     }
 
     @GetMapping("/count")
-    public Long getCount(@RequestParam("name") String name) {
+    public Long getCount(@RequestParam("name") Long name) {
         return wareService.getAllByWareName(name).spliterator().getExactSizeIfKnown();
     }
 
