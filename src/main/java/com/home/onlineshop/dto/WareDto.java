@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class WareDto implements Serializable {
     private Long id;
-    private WareName wareName;
+    private WareName nameId;
     private Manufacturer manufacturer;
     private String serialNumber;
     private WareTypeDto wareType;

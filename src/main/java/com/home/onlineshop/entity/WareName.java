@@ -19,9 +19,9 @@ public class WareName {
     private Long id;
 
     @Column(name="ware_name")
-    private String wareName;
+    private String nameId;
 
-    @OneToMany(mappedBy = "wareName", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "name", cascade = CascadeType.ALL)
     private List<Ware> ware;
 
 }

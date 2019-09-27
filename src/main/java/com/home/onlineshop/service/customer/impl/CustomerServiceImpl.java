@@ -1,41 +1,91 @@
 package com.home.onlineshop.service.customer.impl;
 
-import com.home.onlineshop.dto.WareDto;
+import com.home.onlineshop.entity.Ware;
+import com.home.onlineshop.exceptions.EmptyCartException;
+import com.home.onlineshop.exceptions.WareResourceNotFoundException;
 import com.home.onlineshop.repository.WareRepository;
 import com.home.onlineshop.service.customer.CustomerService;
 import com.home.onlineshop.service.ware.WareCategoryService;
 import com.home.onlineshop.service.ware.WareService;
 import com.home.onlineshop.service.ware.WareTypeService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
 @Service
+@Transactional(readOnly = true)
 public class CustomerServiceImpl implements CustomerService {
 
     private final WareService wareService;
     private final WareTypeService wareTypeService;
     private final WareCategoryService wareCategoryService;
-    private Map<WareDto, Long> cart;
+    private final WareRepository wareRepository;
+    private Map<Long, Long> cart = new HashMap<>();
 
     @Autowired
-    public CustomerServiceImpl(WareService wareService, WareTypeService wareTypeService, WareCategoryService wareCategoryService, WareRepository wareRepository) {
+    public CustomerServiceImpl(WareService wareService,
+                               WareTypeService wareTypeService,
+                               WareCategoryService wareCategoryService,
+                               WareRepository wareRepository) {
         this.wareService = wareService;
         this.wareTypeService = wareTypeService;
         this.wareCategoryService = wareCategoryService;
-        cart = new HashMap<>();
+        this.wareRepository = wareRepository;
     }
 
     @Override
-    public boolean addWareToCart(WareDto wareDto, Long count) {
+    public boolean addToCart(Long nameId, Long count) {
+        if (!wareService.existByNameId(nameId)) {
+            throw new WareResourceNotFoundException();
+        }
+        if (checkAvailableQuantity(nameId, count)) {
+            cart.put(nameId, count);
+        }
+        return true;
+    }
 
-
-
+    @Override
+    public boolean removeFromCart(Long wareNameId) {
+        if (cart.containsKey(wareNameId)) {
+            cart.remove(wareNameId);
+            return true;
+        }
         return false;
+    }
+
+    @Override
+    public void clearCart() {
+        cart.clear();
+    }
+
+    @Override
+    @Transactional
+    public boolean buyWares() {
+        if (cart.isEmpty()) {
+            throw new EmptyCartException();
+        }
+        Pageable pageable = PageRequest.of(0, 4);
+        for (Map.Entry<Long, Long> pair : cart.entrySet()) {
+            Iterable<Ware> allByNameIdAndSoldIsFalse = wareRepository.findAllByNameIdAndSoldIsFalse(pair.getKey(), pageable);
+            Long count = pair.getValue();
+            int iter = 0;
+            for (Ware ware : allByNameIdAndSoldIsFalse) {
+                if (iter++ < count) {
+                    ware.setSold(true);
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean checkAvailableQuantity(Long wareNameId, Long count) {
+        Long less = wareRepository.findAllByNameIdAndSoldIsFalse(wareNameId).spliterator().getExactSizeIfKnown();
+        return less > count;
     }
 
 }

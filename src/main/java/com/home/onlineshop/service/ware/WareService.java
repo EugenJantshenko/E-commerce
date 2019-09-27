@@ -16,4 +16,6 @@ public interface WareService {
 
     Iterable<WareDto> getAllByWareName(Long wareNameId);
 
+    boolean existByNameId(Long id);
+
 }

@@ -12,6 +12,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,29 +38,33 @@ public class WareServiceImplTest {
     @Transactional
     public void shouldCreateNewWare() {
         Ware ware = new Ware();
-        ware.setWareName(new WareName());
+        WareName name =new WareName();
+        name.setNameId("TestName");
+        ware.setName(name);
         ware.setSold(false);
-        ware.setManufacturerId(new Manufacturer());
+        ware.setManufacturer(new Manufacturer());
         ware.setPrice(123d);
         WareType type = new WareType();
         WareCategory cat = new WareCategory();
         cat.setCategoryName("TestCategory");
         type.setTypeName("TestType");
         type.setWareCategory(cat);
-        ware.setWareType(type);
+        ware.setType(type);
         Ware created = wareRepository.save(ware);
-        assertThat(created.getWareName()).isSameAs("TestWare");
-        assertThat(created.getWareType().getTypeName()).isSameAs("TestType");
-        assertThat(created.getSold()).isFalse();
-        assertThat(created.getWareType().getWareCategory().getCategoryName()).isSameAs("TestCategory");
+        assertThat(created.getName().getNameId()).isSameAs("TestName");
+        assertThat(created.getType().getTypeName()).isSameAs("TestType");
+        assertThat(created.isSold()).isFalse();
+        assertThat(created.getType().getWareCategory().getCategoryName()).isSameAs("TestCategory");
     }
 
     @Test
     @Transactional
     public void shouldUpdateWareById() {
         Optional<Ware> ware = wareRepository.findById(3L);
-        ware.get().setManufacturerId(new Manufacturer());
-        assertThat(wareRepository.findById(3L).get().getManufacturerId().getId()).isSameAs(3L);
+        Manufacturer manufacturer =new Manufacturer();
+        manufacturer.setManufacturerName("TestManufacturer");
+        ware.get().setManufacturer(manufacturer);
+        assertThat(wareRepository.findById(3L).get().getManufacturer().getManufacturerName()).isSameAs("TestManufacturer");
     }
 
     @Test
@@ -70,14 +75,14 @@ public class WareServiceImplTest {
 
     @Test
     public void shouldCheckCountOfWareByManufacturer() {
-        Iterable<Ware> collection = wareRepository.findAllByManufacturerId(1L);
-        assertThat(collection.spliterator().getExactSizeIfKnown()).isEqualTo(10);
+        List<Ware> collection = wareRepository.findAllByManufacturerId(1L);
+        assertThat(collection.spliterator().getExactSizeIfKnown()).isEqualTo(3);
     }
 
     @Test
     public void shouldCheckCountOfWareByWareName() {
-        Iterable<Ware> collection = wareRepository.findAllByWareNameId(1L);
-        assertThat(collection.spliterator().getExactSizeIfKnown()).isEqualTo(3);
+        List<Ware> collection = wareRepository.findAllByNameId(1L);
+        assertThat(collection.spliterator().getExactSizeIfKnown()).isEqualTo(5);
     }
 
     @Test

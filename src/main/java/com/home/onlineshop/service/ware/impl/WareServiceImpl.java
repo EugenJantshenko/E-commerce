@@ -68,9 +68,14 @@ public class WareServiceImpl implements WareService {
 
     @Override
     public Iterable<WareDto> getAllByWareName(Long wareName) {
-        return StreamSupport.stream(wareRepository.findAllByWareNameId(wareName).spliterator(), false)
+        return StreamSupport.stream(wareRepository.findAllByNameId(wareName).spliterator(), false)
                 .map(wareMapper::entityToDto)
                 .collect((Collectors.toList()));
+    }
+
+    @Override
+    public boolean existByNameId(Long id) {
+        return wareRepository.existsByNameId(id);
     }
 
     @Override
