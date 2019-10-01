@@ -33,18 +33,18 @@ public class Ware implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "manufacturer_id")
-    private Manufacturer manufacturerId;
+    private Manufacturer manufacturer;
 
     @ManyToOne
-    @JoinColumn(name = "ware_name_id")
-    private WareName wareName;
+    @JoinColumn(name = "name_id")
+    private WareName name;
 
     @Column(name = "serial_number")
     private String serialNumber;
 
     @ManyToOne
     @JoinColumn(name = "type_id")
-    private WareType wareType;
+    private WareType type;
 
     @Column(name = "price")
     private double price;
@@ -56,5 +56,5 @@ public class Ware implements Serializable {
     private LocalDateTime sealedDate;
 
     @Column(name = "sold")
-    private Boolean sold;
+    private boolean sold;
 }

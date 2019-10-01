@@ -1,7 +1,13 @@
 package com.home.onlineshop.service.customer;
 
-import com.home.onlineshop.dto.WareDto;
+import com.home.onlineshop.entity.Cart;
 
 public interface CustomerService {
-    boolean addWareToCart(WareDto wareDto, Long count);
+    boolean addToCart(Cart cart, Long wareNameId, Long count);
+
+    boolean removeFromCart(Cart cart, Long wareNameId);
+
+    void clearCart(Cart cart);
+
+    boolean buyWares(Cart cart);
 }

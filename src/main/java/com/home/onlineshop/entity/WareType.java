@@ -26,7 +26,7 @@ public class WareType implements Serializable {
     @JoinColumn(name = "category_id")
     private WareCategory wareCategory;
 
-    @OneToMany(mappedBy = "wareType", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
     private List<Ware> ware;
 
     @Column(name = "blocked", columnDefinition = "int default 0")

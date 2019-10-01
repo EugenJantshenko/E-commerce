@@ -23,6 +23,6 @@ public class Manufacturer implements Serializable {
     @Column(name="manufacturer_name")
     private String manufacturerName;
 
-    @OneToMany(mappedBy = "manufacturerId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "manufacturer", cascade = CascadeType.ALL)
     private List<Ware> ware;
 }

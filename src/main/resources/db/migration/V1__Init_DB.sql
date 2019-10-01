@@ -37,7 +37,7 @@ create table ware
     received_date datetime,
     sealed_date   datetime,
     serial_number varchar(255) unique ,
-    ware_name_id     bigint references  ware_name(id) ,
+    name_id     bigint references  ware_name(id) ,
     type_id       bigint references ware_type (id),
     primary key (id)
 );

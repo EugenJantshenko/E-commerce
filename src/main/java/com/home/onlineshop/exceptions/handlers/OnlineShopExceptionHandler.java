@@ -1,11 +1,6 @@
 package com.home.onlineshop.exceptions.handlers;
 
-import com.home.onlineshop.exceptions.NoSuchWareCategoryException;
-import com.home.onlineshop.exceptions.NoSuchWareException;
-import com.home.onlineshop.exceptions.NoSuchWareTypeException;
-import com.home.onlineshop.exceptions.NotEnoughWareException;
-import com.home.onlineshop.exceptions.WareAlreadyExistException;
-import com.home.onlineshop.exceptions.WareResourceNotFoundException;
+import com.home.onlineshop.exceptions.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -58,5 +53,10 @@ public class OnlineShopExceptionHandler {
     @ExceptionHandler(WareAlreadyExistException.class)
     protected ResponseEntity<AwesomeException> handleWareAlreadyExistException(){
         return new ResponseEntity<>(new AwesomeException("Ware with those SerialNumber already Exist"), HttpStatus.EXPECTATION_FAILED);
+    }
+
+    @ExceptionHandler(EmptyCartException.class)
+    protected ResponseEntity<AwesomeException> handleEmptyCartException(){
+        return new ResponseEntity<>(new AwesomeException("This cart is empty!"), HttpStatus.NOT_FOUND);
     }
 }
